@@ -1,12 +1,25 @@
 package com.example.ConnectaGym.Entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.List;
 
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Table(name = "usuaris")
-public class Usuari {
+@Table(name = "usuaris", uniqueConstraints = {@UniqueConstraint(columnNames = {"Email"})})
+public class Usuari implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,8 +32,11 @@ public class Usuari {
     @Column(name = "Email")
     private String email;
 
-    @ManyToOne
-    @JoinColumn(name = "Rol")
+    @Column(name = "Password")
+    private String password;
+
+    @Column(name = "Rol")
+    @Enumerated(EnumType.STRING)
     private Rol rol;
 
     @Column(name = "Actiu")
@@ -88,5 +104,43 @@ public class Usuari {
 
     public void setDataModificacio(LocalDateTime dataModificacio) {
         this.dataModificacio = dataModificacio;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority((rol.name())));
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return null;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
