@@ -12,11 +12,13 @@ public class Pagament {
     @Column(name = "Id")
     private Long id;
 
-    @Column(name = "NomMembre")
-    private String nomMembre;
-
-    @Column(name = "Quota")
-    private double quota;
+    @ManyToOne
+    @JoinColumn(name = "IdMembre", referencedColumnName = "Id")
+    private MembreGimnas membre;
+    
+    @ManyToOne
+    @JoinColumn(name = "IdQuota", referencedColumnName = "Id")
+    private Quota quota;
 
     @Column(name = "Quantitat")
     private Long quantitat;
@@ -27,8 +29,9 @@ public class Pagament {
     @Column(name = "DataFinal")
     private Date dataFinal;
 
-    @Column(name = "Gimnas")
-    private String gimnas;
+    @ManyToOne
+    @JoinColumn(name = "IdGimnas", referencedColumnName = "Id")
+    private Gimnas gimnas;
 
     @Column(name = "Actiu")
     private boolean actiu;
@@ -43,22 +46,22 @@ public class Pagament {
         this.id = id;
     }
 
-    public String getNomMembre() {
-        return nomMembre;
+    public MembreGimnas getMembre() {
+        return membre;
     }
 
-    public void setNomMembre(String nomMembre) {
-        this.nomMembre = nomMembre;
+    public void setMembre(MembreGimnas membre) {
+        this.membre = membre;
     }
-
-    public double getQuota() {
+    
+    public Quota getQuota() {
         return quota;
     }
-
-    public void setQuota(double quota) {
+    
+    public void setQuota(Quota quota) {
         this.quota = quota;
     }
-
+    
     public Long getQuantitat() {
         return quantitat;
     }
@@ -83,11 +86,11 @@ public class Pagament {
         this.dataFinal = dataFinal;
     }
 
-    public String getGimnas() {
+    public Gimnas getGimnas() {
         return gimnas;
     }
 
-    public void setGimnas(String gimnas) {
+    public void setGimnas(Gimnas gimnas) {
         this.gimnas = gimnas;
     }
 
