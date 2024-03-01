@@ -15,14 +15,16 @@ public class Visita {
     @Column(name = "Id")
     private Long id;
 
-    @Column(name = "NomMembre")
-    private String nomMembre;
+    @ManyToOne
+    @JoinColumn(name = "idMembre", referencedColumnName = "Id")
+    private MembreGimnas membreGimnas;
 
     @Column(name = "DataVisita")
     private Date dataVisita;
 
-    @Column(name = "Gimnas")
-    private String gimnas;
+    @ManyToOne
+    @JoinColumn(name = "idGimnas", referencedColumnName = "Id")
+    private Gimnas gimnas;
 
     // Getters y setters
 
@@ -34,12 +36,12 @@ public class Visita {
         this.id = id;
     }
 
-    public String getNomMembre() {
-        return nomMembre;
+    public MembreGimnas getMembreGimnas() {
+        return membreGimnas;
     }
-
-    public void setNomMembre(String nomMembre) {
-        this.nomMembre = nomMembre;
+    
+    public void setMembreGimnas(MembreGimnas membreGimnas) {
+        this.membreGimnas = membreGimnas;
     }
 
     public Date getDataVisita() {
@@ -50,11 +52,11 @@ public class Visita {
         this.dataVisita = dataVisita;
     }
 
-    public String getGimnas() {
+    public Gimnas getGimnas() {
         return gimnas;
     }
-
-    public void setGimnas(String gimnas) {
+    
+    public void setGimnas(Gimnas gimnas) {
         this.gimnas = gimnas;
     }
 }
