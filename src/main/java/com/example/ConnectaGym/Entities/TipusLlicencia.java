@@ -26,7 +26,7 @@ public class TipusLlicencia {
     private Integer mesos;
 
     @ManyToOne
-    @JoinColumn(name = "idCreador", referencedColumnName = "Id")
+    @JoinColumn(name = "IdCreador", referencedColumnName = "Id")
     private Usuari creador;
 
     @Column(name = "DataCreacio")
