@@ -12,11 +12,13 @@ public class Llicencia {
     @Column(name = "Id")
     private Long id;
 
-    @Column(name = "Propietari")
-    private String propietari;
-
-    @Column(name = "TipusLlicencia")
-    private Integer tipusLlicencia;
+    @ManyToOne
+    @JoinColumn(name = "IdPropietari", referencedColumnName = "Id")
+    private Propietari propietari;
+    
+    @ManyToOne
+    @JoinColumn(name = "IdTipusLlicencia", referencedColumnName = "Id")
+    private TipusLlicencia tipusLlicencia;
 
     @Column(name = "Preu")
     private Double preu;
@@ -40,19 +42,19 @@ public class Llicencia {
         this.id = id;
     }
 
-    public String getPropietari() {
+    public Propietari getPropietari() {
         return propietari;
     }
 
-    public void setPropietari(String propietari) {
+    public void setPropietari(Propietari propietari) {
         this.propietari = propietari;
     }
 
-    public Integer getTipusLlicencia() {
+    public TipusLlicencia getTipusLlicencia() {
         return tipusLlicencia;
     }
 
-    public void setTipusLlicencia(Integer tipusLlicencia) {
+    public void setTipusLlicencia(TipusLlicencia tipusLlicencia) {
         this.tipusLlicencia = tipusLlicencia;
     }
 
