@@ -11,8 +11,9 @@ public class Missatge {
     @Column(name = "Id")
     private Long id;
 
-    @Column(name = "NomMembre")
-    private String nomMembre;
+    @ManyToOne
+    @JoinColumn(name = "IdMembre", referencedColumnName = "Id")
+    private MembreGimnas membre;
 
     @Column(name = "Titol")
     private String titol;
@@ -30,12 +31,12 @@ public class Missatge {
         this.id = id;
     }
 
-    public String getNomMembre() {
-        return nomMembre;
+    public MembreGimnas getMembre() {
+        return membre;
     }
 
-    public void setNomMembre(String nomMembre) {
-        this.nomMembre = nomMembre;
+    public void setMembre(MembreGimnas membre) {
+        this.membre = membre;
     }
 
     public String getTitol() {
