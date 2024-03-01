@@ -1,7 +1,10 @@
 package com.example.ConnectaGym.Entities;
 
+import com.example.ConnectaGym.Security.entity.Usuari;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "gimnasos")
@@ -24,11 +27,13 @@ public class Gimnas {
     @Column(name = "Email")
     private String email;
 
-    @Column(name = "NomPropietari")
-    private String nomPropietari;
+    @ManyToOne
+    @JoinColumn(name = "IdNomPropietari", referencedColumnName = "Id")
+    private Propietari propietari;
 
-    @Column(name = "Admin")
-    private String admin;
+    @ManyToOne
+    @JoinColumn(name = "IdAdmin", referencedColumnName = "Id")
+    private Usuari admin;
 
     @Column(name = "DataCreacio")
     private LocalDateTime dataCreacio;
@@ -82,19 +87,19 @@ public class Gimnas {
         this.email = email;
     }
 
-    public String getNomPropietari() {
-        return nomPropietari;
+    public Propietari getPropietari() {
+        return propietari;
     }
 
-    public void setNomPropietari(String nomPropietari) {
-        this.nomPropietari = nomPropietari;
+    public void setPropietari(Propietari propietari) {
+        this.propietari = propietari;
     }
 
-    public String getAdmin() {
+    public Usuari getAdmin() {
         return admin;
     }
 
-    public void setAdmin(String admin) {
+    public void setAdmin(Usuari admin) {
         this.admin = admin;
     }
 
@@ -113,4 +118,5 @@ public class Gimnas {
     public void setDataModificacio(LocalDateTime dataModificacio) {
         this.dataModificacio = dataModificacio;
     }
+
 }

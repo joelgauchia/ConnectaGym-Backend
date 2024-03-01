@@ -1,25 +1,14 @@
-package com.example.ConnectaGym.Entities;
+package com.example.ConnectaGym.Security.entity;
 
+import com.example.ConnectaGym.Entities.Gimnas;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
 import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
-@Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "usuaris", uniqueConstraints = {@UniqueConstraint(columnNames = {"Email"})})
-public class Usuari implements UserDetails {
+public class Usuari {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,10 +23,11 @@ public class Usuari implements UserDetails {
 
     @Column(name = "Password")
     private String password;
+    private String tokenPassword;
 
-    @Column(name = "Rol")
-    @Enumerated(EnumType.STRING)
-    private Rol rol;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "UsuarisRol", joinColumns = @JoinColumn(name = "usuari_id"), inverseJoinColumns = @JoinColumn(name = "rol_id"))
+    private Set<Rol> rols = new HashSet<>();
 
     @Column(name = "Actiu")
     private Boolean actiu;
@@ -48,7 +38,19 @@ public class Usuari implements UserDetails {
     @Column(name = "DataModificacio")
     private LocalDateTime dataModificacio;
 
-    // Getters y setters
+    @OneToMany(mappedBy = "admin", cascade = CascadeType.ALL)
+    private Set<Gimnas> gimnasos = new HashSet<>();
+
+    public Usuari() {}
+
+    public Usuari(String nomUsuari, String email, String password, Boolean actiu, LocalDateTime dataCreacio, LocalDateTime dataModificacio) {
+        this.nomUsuari = nomUsuari;
+        this.email = email;
+        this.password = password;
+        this.actiu = actiu;
+        this.dataCreacio = dataCreacio;
+        this.dataModificacio = dataModificacio;
+    }
 
     public Long getId() {
         return id;
@@ -74,12 +76,20 @@ public class Usuari implements UserDetails {
         this.email = email;
     }
 
-    public Rol getRol() {
-        return rol;
+    public String getPassword() {
+        return password;
     }
 
-    public void setRol(Rol rol) {
-        this.rol = rol;
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Set<Rol> getRols() {
+        return rols;
+    }
+
+    public void setRols(Set<Rol> rols) {
+        this.rols = rols;
     }
 
     public Boolean getActiu() {
@@ -106,41 +116,11 @@ public class Usuari implements UserDetails {
         this.dataModificacio = dataModificacio;
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority((rol.name())));
+    public Set<Gimnas> getGimnasos() {
+        return gimnasos;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    @Override
-    public String getUsername() {
-        return null;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    public void setGimnasos(Set<Gimnas> gimnasos) {
+        this.gimnasos = gimnasos;
     }
 }

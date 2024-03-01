@@ -3,6 +3,8 @@ package com.example.ConnectaGym.Entities;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "propietaris")
@@ -43,7 +45,18 @@ public class Propietari {
     @Column(name = "DataModificacio")
     private LocalDateTime dataModificacio;
 
+    @OneToMany(mappedBy = "propietari", cascade = CascadeType.ALL)
+    private Set<Gimnas> gimnasos = new HashSet<>();
+
     // Getters i setters
+
+    public Set<Gimnas> getGimnasos() {
+        return gimnasos;
+    }
+
+    public void setGimnasos(Set<Gimnas> gimnasos) {
+        this.gimnasos = gimnasos;
+    }
 
     public Long getId() {
         return id;
