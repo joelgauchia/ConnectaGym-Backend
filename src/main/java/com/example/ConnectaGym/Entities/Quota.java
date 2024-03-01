@@ -27,11 +27,11 @@ public class Quota {
     private Integer mesos;
 
     @ManyToOne
-    @JoinColumn(name = "Gimnas")
+    @JoinColumn(name = "idGimnas")
     private Gimnas gimnas;
 
     @ManyToOne
-    @JoinColumn(name = "Creador")
+    @JoinColumn(name = "idCreador")
     private Usuari creador;
 
     @Column(name = "DataCreacio")
