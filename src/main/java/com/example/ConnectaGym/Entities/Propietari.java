@@ -36,8 +36,9 @@ public class Propietari {
     @Column(name = "Tipus")
     private String tipus;
 
-    @Column(name = "Creador")
-    private String creador;
+    @ManyToOne
+    @JoinColumn(name = "idCreador", referencedColumnName = "Id")
+    private Usuari creador;
 
     @Column(name = "DataCreacio")
     private LocalDateTime dataCreacio;
@@ -122,11 +123,11 @@ public class Propietari {
         this.tipus = tipus;
     }
 
-    public String getCreador() {
+    public Usuari getCreador() {
         return creador;
     }
-
-    public void setCreador(String creador) {
+    
+    public void setCreador(Usuari creador) {
         this.creador = creador;
     }
 
