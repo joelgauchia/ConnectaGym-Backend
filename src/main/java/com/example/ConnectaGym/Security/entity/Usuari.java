@@ -1,6 +1,5 @@
 package com.example.ConnectaGym.Security.entity;
 
-import com.example.ConnectaGym.Entities.Gimnas;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -21,6 +20,9 @@ public class Usuari {
     @Column(name = "Email")
     private String email;
 
+    @Column(name = "Nom")
+    private String nom;
+
     @Column(name = "Password")
     private String password;
     private String tokenPassword;
@@ -38,14 +40,12 @@ public class Usuari {
     @Column(name = "DataModificacio")
     private LocalDateTime dataModificacio;
 
-    @OneToMany(mappedBy = "admin", cascade = CascadeType.ALL)
-    private Set<Gimnas> gimnasos = new HashSet<>();
-
     public Usuari() {}
 
-    public Usuari(String nomUsuari, String email, String password, Boolean actiu, LocalDateTime dataCreacio, LocalDateTime dataModificacio) {
+    public Usuari(String nomUsuari, String email, String nom, String password, Boolean actiu, LocalDateTime dataCreacio, LocalDateTime dataModificacio) {
         this.nomUsuari = nomUsuari;
         this.email = email;
+        this.nom = nom;
         this.password = password;
         this.actiu = actiu;
         this.dataCreacio = dataCreacio;
@@ -74,6 +74,14 @@ public class Usuari {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
     }
 
     public String getPassword() {
@@ -114,13 +122,5 @@ public class Usuari {
 
     public void setDataModificacio(LocalDateTime dataModificacio) {
         this.dataModificacio = dataModificacio;
-    }
-
-    public Set<Gimnas> getGimnasos() {
-        return gimnasos;
-    }
-
-    public void setGimnasos(Set<Gimnas> gimnasos) {
-        this.gimnasos = gimnasos;
     }
 }

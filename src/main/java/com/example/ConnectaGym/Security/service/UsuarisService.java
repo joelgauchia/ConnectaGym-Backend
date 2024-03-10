@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -42,7 +43,9 @@ public class UsuarisService {
     @Autowired
     JwtProvider jwtProvider;
 
-    public Optional<Usuari> getByNomUsuari(String nomUsuari) {
+    public List<Usuari> getUsuaris() { return usuarisRepository.findAll(); }
+
+    public List<Usuari> getByNomUsuari(String nomUsuari) {
         return usuarisRepository.findByNomUsuari(nomUsuari);
     }
 
@@ -76,7 +79,7 @@ public class UsuarisService {
     }
 
     public Usuari save(NouUsuari nouUsuari) {
-        Usuari usuari = new Usuari(nouUsuari.getNomUsuari(), nouUsuari.getEmail(), passwordEncoder.encode(nouUsuari.getPassword()), true, LocalDateTime.now(), LocalDateTime.now());
+        Usuari usuari = new Usuari(nouUsuari.getNomUsuari(), nouUsuari.getEmail(), nouUsuari.getNom(), passwordEncoder.encode(nouUsuari.getPassword()), true, LocalDateTime.now(), LocalDateTime.now());
         Set<Rol> rols = new HashSet<>();
         rols.add(rolService.getByRolNom(RolNom.STAFF).get());
         if (nouUsuari.getRols().contains("GYMADMIN")) rols.add(rolService.getByRolNom(RolNom.GYMADMIN).get());
@@ -84,5 +87,57 @@ public class UsuarisService {
         usuari.setRols(rols);
         usuarisRepository.save(usuari);
         return usuari;
+    }
+
+    public Usuari actualitzarUsuari(String nomUsuari, Usuari usuariEditat) {
+        List<Usuari> usuaris = usuarisRepository.findByNomUsuari(nomUsuari);
+        if (!usuaris.isEmpty()) {
+            Usuari usuari = usuaris.get(0);
+            usuari.setNomUsuari(usuariEditat.getNomUsuari());
+            usuari.setNom(usuariEditat.getNom());
+            usuari.setEmail(usuariEditat.getEmail());
+            usuari.setActiu(usuariEditat.getActiu());
+            usuari.setDataCreacio(usuariEditat.getDataCreacio());
+            usuari.setDataModificacio(LocalDateTime.now());
+            return usuarisRepository.save(usuari);
+        } else {
+            throw new RuntimeException("No s'ha trobat cap usuari amb el nom d'usuari proporcionat");
+        }
+    }
+
+    public Usuari crearUsuari(Usuari nouUsuari) {
+        if (existsByNomUsuari(nouUsuari.getNomUsuari())) {
+            throw new RuntimeException("El nom d'usuari ja està en ús");
+        }
+        if (existsByEmail(nouUsuari.getEmail())) {
+            throw new RuntimeException("L'email ja està en ús");
+        }
+        Usuari usuari = new Usuari(nouUsuari.getNomUsuari(), nouUsuari.getEmail(), nouUsuari.getNom(), passwordEncoder.encode(nouUsuari.getPassword()), true, LocalDateTime.now(), LocalDateTime.now());
+
+        Set<Rol> rols = new HashSet<>();
+
+        if (nouUsuari.getRols().stream().anyMatch(rol -> rol.getRolNom() == RolNom.SUPERADMIN)) {
+            rols.add(rolService.getByRolNom(RolNom.SUPERADMIN).orElseThrow(() -> new RuntimeException("El rol SUPERADMIN no s'ha trobat")));
+            rols.add(rolService.getByRolNom(RolNom.GYMADMIN).orElseThrow(() -> new RuntimeException("El rol GYMADMIN no s'ha trobat")));
+            rols.add(rolService.getByRolNom(RolNom.STAFF).orElseThrow(() -> new RuntimeException("El rol STAFF no s'ha trobat")));
+        } else if (nouUsuari.getRols().stream().anyMatch(rol -> rol.getRolNom() == RolNom.GYMADMIN)) {
+            rols.add(rolService.getByRolNom(RolNom.GYMADMIN).orElseThrow(() -> new RuntimeException("El rol GYMADMIN no s'ha trobat")));
+            rols.add(rolService.getByRolNom(RolNom.STAFF).orElseThrow(() -> new RuntimeException("El rol STAFF no s'ha trobat")));
+        } else {
+            rols.add(rolService.getByRolNom(RolNom.STAFF).orElseThrow(() -> new RuntimeException("El rol STAFF no s'ha trobat")));
+        }
+        usuari.setRols(rols);
+
+        return usuarisRepository.save(usuari);
+    }
+
+    public void eliminarUsuari(String nomUsuari) {
+        List<Usuari> usuaris = usuarisRepository.findByNomUsuari(nomUsuari);
+        if (!usuaris.isEmpty()) {
+            Usuari usuari = usuaris.get(0);
+            usuarisRepository.delete(usuari);
+        } else {
+            throw new RuntimeException("No s'ha trobat cap usuari amb el nom d'usuari proporcionat");
+        }
     }
 }

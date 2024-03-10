@@ -47,7 +47,8 @@ public class MainSecurity {
         http.cors(Customizer.withDefaults());
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
-        http.authorizeHttpRequests(auth -> auth.requestMatchers("/auth/**",
+        http.authorizeHttpRequests(auth -> auth.requestMatchers(
+                "/auth/**",
                         "/email-password/**",
                         "/v2/api-docs/**",
                         "/swagger-ui/**",

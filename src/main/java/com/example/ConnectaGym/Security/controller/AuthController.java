@@ -22,7 +22,7 @@ public class AuthController {
     UsuarisService usuarisService;
 
     @PostMapping("/register")
-    public ResponseEntity<Usuari> register(@Valid @RequestBody NouUsuari nouUsuari, BindingResult bindingResult) {
+    public ResponseEntity<?> register(@Valid @RequestBody NouUsuari nouUsuari, BindingResult bindingResult) {
        return ResponseEntity.ok(usuarisService.save(nouUsuari));
     }
 

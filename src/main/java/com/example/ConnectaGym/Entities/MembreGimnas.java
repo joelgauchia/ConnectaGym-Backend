@@ -1,5 +1,6 @@
 package com.example.ConnectaGym.Entities;
 
+import com.example.ConnectaGym.Security.entity.Usuari;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
