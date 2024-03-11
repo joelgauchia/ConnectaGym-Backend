@@ -60,7 +60,6 @@ public class UsuarisController {
             usuariDto.setRols(usuari.getRols());
             usuarisDto.add(usuariDto);
         }
-        logger.info(usuarisDto.toString());
         return usuarisDto;
     }
 

@@ -7,12 +7,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class UsuariDto {
-    String nomUsuari;
-    String email;
-    String nom;
-    boolean actiu;
-    LocalDateTime dataCreacio;
-    LocalDateTime dataModificacio;
+    private String nomUsuari;
+    private String email;
+    private String nom;
+    private boolean actiu;
+    private LocalDateTime dataCreacio;
+    private LocalDateTime dataModificacio;
     private Set<Rol> rols = new HashSet<>();
 
     public String getNomUsuari() {
