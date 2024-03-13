@@ -38,7 +38,7 @@ public class Propietari {
     private String tipus;
 
     @ManyToOne
-    @JoinColumn(name = "IdCreador", referencedColumnName = "Id")
+    @JoinColumn(name = "idCreador", referencedColumnName = "Id")
     private Usuari creador;
 
     @Column(name = "DataCreacio")
@@ -127,7 +127,7 @@ public class Propietari {
     public Usuari getCreador() {
         return creador;
     }
-    
+
     public void setCreador(Usuari creador) {
         this.creador = creador;
     }

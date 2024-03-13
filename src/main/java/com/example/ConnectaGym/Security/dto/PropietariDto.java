@@ -1,13 +1,10 @@
 package com.example.ConnectaGym.Security.dto;
 
 import com.example.ConnectaGym.Security.entity.Usuari;
-import jakarta.persistence.Column;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-
 import java.time.LocalDateTime;
 
-public class PropietariDto {
+public class PropietariDto{
+    private Long id;
     private String nom;
     private String email;
     private String telefon;
@@ -18,6 +15,14 @@ public class PropietariDto {
     private Usuari creador;
     private LocalDateTime dataCreacio;
     private LocalDateTime dataModificacio;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getNom() {
         return nom;
