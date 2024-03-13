@@ -6,14 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
-@RequestMapping(path="/tipus-llicencies")
+@RequestMapping(path="/tipusllicencia")
 @RestController
 public class TipusLlicenciesController {
 
     @Autowired
     TipusLlicenciesService tipusLlicenciesService;
 
-    @GetMapping()
+    @GetMapping("/llistat")
     public List<TipusLlicencia> getTipusLlicencia() {
         return this.tipusLlicenciesService.getTipusLlicencia();
     }

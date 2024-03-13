@@ -31,8 +31,8 @@ public class PropietarisController {
     @PostMapping("/crear")
     public ResponseEntity<String> crearPropietari(@RequestBody Propietari propietari) {
         try {
-            Propietari propietariCreado = propietarisService.afegirPropietari(propietari);
-            return ResponseEntity.status(HttpStatus.CREATED).body("Propietari creat amb èxit amb ID: " + propietariCreado.getId());
+            Propietari propietariCreat = propietarisService.afegirPropietari(propietari);
+            return ResponseEntity.status(HttpStatus.CREATED).body("Propietari creat amb èxit amb ID: " + propietariCreat.getId());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error en la creació del propietari: " + e.getMessage());
         }

@@ -4,7 +4,10 @@ import com.example.ConnectaGym.Entities.Llicencia;
 import com.example.ConnectaGym.Repositories.LlicenciesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -31,16 +34,22 @@ public class LlicenciesService {
     }
 
     public Llicencia afegirLlicencia(Llicencia ll) {
+        if (ll.getActiva() && llicenciesRepository.existsByPropietariNom(ll.getPropietari().getNom())) {
+            throw new RuntimeException("Ja existeix una llicència per aquest propietari.");
+        }
+        ll.setDataInici(LocalDateTime.now());
+        if ((Objects.equals(ll.getTipusLlicencia().getTipus(), "Mensual")) || Objects.equals(ll.getTipusLlicencia().getTipus(), "MENSUAL")) ll.setDataVenciment(ll.getDataInici().plusMonths(1));
+        if ((Objects.equals(ll.getTipusLlicencia().getTipus(), "Trimestral")) || Objects.equals(ll.getTipusLlicencia().getTipus(), "TRIMESTRAL")) ll.setDataVenciment(ll.getDataInici().plusMonths(3));
+        if ((Objects.equals(ll.getTipusLlicencia().getTipus(), "Anual")) || Objects.equals(ll.getTipusLlicencia().getTipus(), "ANUAL")) ll.setDataVenciment(ll.getDataInici().plusMonths(12));
         this.llicenciesRepository.save(ll);
         return ll;
     }
 
-    public Llicencia deleteLlicencia(Long id) {
+    public void deleteLlicencia(Long id) {
         Optional<Llicencia> optionalLlicencia = this.llicenciesRepository.findById(id);
         if (optionalLlicencia.isPresent()) {
             Llicencia llicencia = optionalLlicencia.get();
             this.llicenciesRepository.deleteById(id);
-            return llicencia;
-        } else return null;
+        }
     }
 }
