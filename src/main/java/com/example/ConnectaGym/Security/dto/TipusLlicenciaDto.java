@@ -8,7 +8,7 @@ public class TipusLlicenciaDto {
     private Long id;
     private String nom;
     private String tipus;
-    private String mesos;
+    private Long mesos;
     private double preu;
     private Usuari creador;
     private LocalDateTime dataCreacio;
@@ -38,11 +38,11 @@ public class TipusLlicenciaDto {
         this.tipus = tipus;
     }
 
-    public String getMesos() {
+    public Long getMesos() {
         return mesos;
     }
 
-    public void setMesos(String mesos) {
+    public void setMesos(Long mesos) {
         this.mesos = mesos;
     }
 

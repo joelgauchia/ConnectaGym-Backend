@@ -24,7 +24,7 @@ public class TipusLlicencia {
     private String tipus;
 
     @Column(name = "Mesos")
-    private Integer mesos;
+    private Long mesos;
 
     @ManyToOne
     @JoinColumn(name = "IdCreador", referencedColumnName = "Id")
@@ -70,11 +70,11 @@ public class TipusLlicencia {
         this.tipus = tipus;
     }
 
-    public Integer getMesos() {
+    public Long getMesos() {
         return mesos;
     }
 
-    public void setMesos(Integer mesos) {
+    public void setMesos(Long mesos) {
         this.mesos = mesos;
     }
 

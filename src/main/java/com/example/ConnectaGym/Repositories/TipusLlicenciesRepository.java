@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TipusLlicenciesRepository extends JpaRepository<TipusLlicencia, Long> {
+    boolean existsByNom(String nom);
 }
