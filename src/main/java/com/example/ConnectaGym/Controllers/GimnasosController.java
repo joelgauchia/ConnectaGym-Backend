@@ -32,7 +32,7 @@ public class GimnasosController {
     public ResponseEntity<String> crearGimnas(@RequestBody Gimnas g) {
        try {
            Gimnas gimnasCreat = gimnasosService.afegirGimnas(g);
-           return ResponseEntity.status(HttpStatus.CREATED).body("Gimnàs creat amb èxit" );
+           return ResponseEntity.status(HttpStatus.CREATED).body("Gimnàs creat amb èxit");
        } catch (Exception e) {
            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error en la creació del gimnàs: " + e.getMessage());
        }
@@ -57,7 +57,7 @@ public class GimnasosController {
         gimnasDto.setTelefon(gimnas.getTelefon());
         gimnasDto.setEmail(gimnas.getEmail());
         gimnasDto.setPropietari(gimnas.getPropietari());
-        gimnasDto.setCreador(gimnas.getAdmin());
+        gimnasDto.setCreador(gimnas.getCreador());
         gimnasDto.setDataCreacio(gimnas.getDataCreacio());
         gimnasDto.setDataModificacio(gimnas.getDataModificacio());
         return gimnasDto;
@@ -73,7 +73,7 @@ public class GimnasosController {
             gimnasDto.setTelefon(gimnas.getTelefon());
             gimnasDto.setEmail(gimnas.getEmail());
             gimnasDto.setPropietari(gimnas.getPropietari());
-            gimnasDto.setCreador(gimnas.getAdmin());
+            gimnasDto.setCreador(gimnas.getCreador());
             gimnasDto.setDataCreacio(gimnas.getDataCreacio());
             gimnasDto.setDataModificacio(gimnas.getDataModificacio());
             gimnasosDto.add(gimnasDto);

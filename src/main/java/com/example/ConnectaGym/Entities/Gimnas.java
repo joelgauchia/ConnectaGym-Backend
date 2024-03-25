@@ -11,7 +11,6 @@ import java.util.Set;
 
 @Entity
 @Table(name = "gimnasos")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Gimnas {
 
     @Id
@@ -32,12 +31,12 @@ public class Gimnas {
     private String email;
 
     @ManyToOne
-    @JoinColumn(name = "IdNomPropietari", referencedColumnName = "Id")
+    @JoinColumn(name = "IdPropietari", referencedColumnName = "Id")
     private Propietari propietari;
 
     @ManyToOne
-    @JoinColumn(name = "IdAdmin", referencedColumnName = "Id")
-    private Usuari admin;
+    @JoinColumn(name = "IdCreador", referencedColumnName = "Id")
+    private Usuari creador;
 
     @Column(name = "DataCreacio")
     private LocalDateTime dataCreacio;
@@ -91,6 +90,7 @@ public class Gimnas {
         this.email = email;
     }
 
+    @JsonBackReference
     public Propietari getPropietari() {
         return propietari;
     }
@@ -99,12 +99,12 @@ public class Gimnas {
         this.propietari = propietari;
     }
 
-    public Usuari getAdmin() {
-        return admin;
+    public Usuari getCreador() {
+        return creador;
     }
 
-    public void setAdmin(Usuari admin) {
-        this.admin = admin;
+    public void setAdmin(Usuari creador) {
+        this.creador = creador;
     }
 
     public LocalDateTime getDataCreacio() {

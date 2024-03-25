@@ -40,6 +40,9 @@ public class LlicenciesService {
         if (ll.getPropietari().getTipus().equals("INDIVIDUAL") && ll.getTipusLlicencia().getTipus().equals("CADENA")) {
             throw new RuntimeException("No pots seleccionar aquest tipus de llicència per aquest propietari.");
         }
+        if (ll.getPropietari().getTipus().equals("CADENA") && ll.getTipusLlicencia().getTipus().equals("INDIVIDUAL")) {
+            throw new RuntimeException("No pots seleccionar aquest tipus de llicència per aquest propietari.");
+        }
         ll.setDataInici(LocalDateTime.now());
         if ((Objects.equals(ll.getTipusLlicencia().getDurada(), "Mensual")) || Objects.equals(ll.getTipusLlicencia().getDurada(), "MENSUAL")) ll.setDataVenciment(ll.getDataInici().plusMonths(1));
         if ((Objects.equals(ll.getTipusLlicencia().getDurada(), "Trimestral")) || Objects.equals(ll.getTipusLlicencia().getDurada(), "TRIMESTRAL")) ll.setDataVenciment(ll.getDataInici().plusMonths(3));

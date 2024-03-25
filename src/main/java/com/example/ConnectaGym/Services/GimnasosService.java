@@ -56,7 +56,7 @@ public class GimnasosService {
         if (gimnasosRepository.existsByTelefon(telefonGimnas)) {
             throw new RuntimeException("Ja existeix un gimnàs amb aquest telèfon");
         }
-        String nomUsuariCreador = g.getAdmin().getNomUsuari();
+        String nomUsuariCreador = g.getCreador().getNomUsuari();
         List<Usuari> usuarisCreador = usuarisRepository.findByNomUsuari(nomUsuariCreador);
 
         if (!usuarisCreador.isEmpty()) {

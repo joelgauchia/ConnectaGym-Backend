@@ -10,7 +10,6 @@ import java.util.Set;
 
 @Entity
 @Table(name = "propietaris")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Propietari {
 
     @Id
@@ -54,6 +53,7 @@ public class Propietari {
 
     // Getters i setters
 
+    @JsonManagedReference
     public Set<Gimnas> getGimnasos() {
         return gimnasos;
     }

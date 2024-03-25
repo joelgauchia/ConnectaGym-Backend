@@ -1,57 +1,24 @@
-package com.example.ConnectaGym.Entities;
+package com.example.ConnectaGym.Security.dto;
 
+import com.example.ConnectaGym.Entities.Gimnas;
 import com.example.ConnectaGym.Security.entity.Usuari;
-import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "membresgimnasos")
-public class MembreGimnas {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Id")
+public class MembreDto {
     private Long id;
-
-    @Column(name = "Nom")
     private String nom;
-
-    @Column(name = "Email")
     private String email;
-
-    @Column(name = "Telefon")
     private String telefon;
-
-    @Column(name = "Adreca")
     private String adreca;
-
-    @Column(name = "Genere")
     private String genere;
-
-    @Column(name = "Estat")
     private String estat;
-
-    @Column(name = "DataNaixement")
     private LocalDateTime dataNaixement;
-
-    @Column(name = "Observacions")
     private String observacions;
-
-    @ManyToOne
-    @JoinColumn(name = "IdGimnas", referencedColumnName = "Id")
     private Gimnas gimnas;
-
-    @ManyToOne
-    @JoinColumn(name = "IdCreador", referencedColumnName = "Id")
     private Usuari creador;
-
-    @Column(name = "DataCreacio")
     private LocalDateTime dataCreacio;
-
-    @Column(name = "DataModificacio")
     private LocalDateTime dataModificacio;
-
-    // Getters i setters
 
     public Long getId() {
         return id;
@@ -93,14 +60,6 @@ public class MembreGimnas {
         this.adreca = adreca;
     }
 
-    public LocalDateTime getDataNaixement() {
-        return dataNaixement;
-    }
-
-    public void setDataNaixement(LocalDateTime dataNaixement) {
-        this.dataNaixement = dataNaixement;
-    }
-
     public String getGenere() {
         return genere;
     }
@@ -115,6 +74,14 @@ public class MembreGimnas {
 
     public void setEstat(String estat) {
         this.estat = estat;
+    }
+
+    public LocalDateTime getDataNaixement() {
+        return dataNaixement;
+    }
+
+    public void setDataNaixement(LocalDateTime dataNaixement) {
+        this.dataNaixement = dataNaixement;
     }
 
     public String getObservacions() {
@@ -132,7 +99,7 @@ public class MembreGimnas {
     public void setGimnas(Gimnas gimnas) {
         this.gimnas = gimnas;
     }
-    
+
     public Usuari getCreador() {
         return creador;
     }
@@ -140,7 +107,7 @@ public class MembreGimnas {
     public void setCreador(Usuari creador) {
         this.creador = creador;
     }
-    
+
     public LocalDateTime getDataCreacio() {
         return dataCreacio;
     }

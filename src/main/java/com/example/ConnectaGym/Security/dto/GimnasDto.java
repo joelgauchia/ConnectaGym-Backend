@@ -6,15 +6,15 @@ import com.example.ConnectaGym.Security.entity.Usuari;
 import java.time.LocalDateTime;
 
 public class GimnasDto {
-    Long id;
-    String nom;
-    String adreca;
-    String telefon;
-    String email;
-    Propietari propietari;
-    Usuari creador;
-    LocalDateTime dataCreacio;
-    LocalDateTime dataModificacio;
+    private Long id;
+    private String nom;
+    private String adreca;
+    private String telefon;
+    private String email;
+    private Propietari propietari;
+    private Usuari creador;
+    private LocalDateTime dataCreacio;
+    private LocalDateTime dataModificacio;
 
     public Long getId() {
         return id;
