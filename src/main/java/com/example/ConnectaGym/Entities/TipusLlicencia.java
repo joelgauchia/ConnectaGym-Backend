@@ -20,11 +20,14 @@ public class TipusLlicencia {
     @Column(name = "Preu")
     private Double preu;
 
-    @Column(name = "Tipus")
-    private String tipus;
+    @Column(name = "Durada")
+    private String durada;
 
     @Column(name = "Mesos")
     private Long mesos;
+
+    @Column(name = "Tipus")
+    private String tipus;
 
     @ManyToOne
     @JoinColumn(name = "IdCreador", referencedColumnName = "Id")
@@ -62,16 +65,24 @@ public class TipusLlicencia {
         this.preu = preu;
     }
 
+    public String getDurada() {
+        return durada;
+    }
+
+    public void setDurada(String durada) {
+        this.durada = durada;
+    }
+
+    public Long getMesos() {
+        return mesos;
+    }
+
     public String getTipus() {
         return tipus;
     }
 
     public void setTipus(String tipus) {
         this.tipus = tipus;
-    }
-
-    public Long getMesos() {
-        return mesos;
     }
 
     public void setMesos(Long mesos) {

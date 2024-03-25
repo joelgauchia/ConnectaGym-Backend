@@ -1,6 +1,7 @@
 package com.example.ConnectaGym.Entities;
 
 import com.example.ConnectaGym.Security.entity.Usuari;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -9,6 +10,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "propietaris")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Propietari {
 
     @Id
@@ -56,8 +58,8 @@ public class Propietari {
         return gimnasos;
     }
 
-    public void setGimnasos(Set<Gimnas> gimnasos) {
-        this.gimnasos = gimnasos;
+    public void setGimnas(Gimnas gimnas) {
+        this.gimnasos.add(gimnas);
     }
 
     public Long getId() {

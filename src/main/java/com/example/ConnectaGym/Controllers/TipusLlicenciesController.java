@@ -57,8 +57,9 @@ public class TipusLlicenciesController {
             tipusLlicenciaDto.setId(tl.getId());
             tipusLlicenciaDto.setNom(tl.getNom());
             tipusLlicenciaDto.setPreu(tl.getPreu());
-            tipusLlicenciaDto.setTipus(tl.getTipus());
+            tipusLlicenciaDto.setDurada(tl.getDurada());
             tipusLlicenciaDto.setMesos(tl.getMesos());
+            tipusLlicenciaDto.setTipus(tl.getTipus());
             tipusLlicenciaDto.setCreador(tl.getCreador());
             tipusLlicenciaDto.setDataCreacio(tl.getDataCreacio());
             tipusLlicenciaDto.setDataModificacio(tl.getDataModificacio());
@@ -72,8 +73,9 @@ public class TipusLlicenciesController {
         tipusLlicenciaDto.setId(tl.getId());
         tipusLlicenciaDto.setNom(tl.getNom());
         tipusLlicenciaDto.setPreu(tl.getPreu());
-        tipusLlicenciaDto.setTipus(tl.getTipus());
+        tipusLlicenciaDto.setDurada(tl.getDurada());
         tipusLlicenciaDto.setMesos(tl.getMesos());
+        tipusLlicenciaDto.setTipus(tl.getTipus());
         tipusLlicenciaDto.setCreador(tl.getCreador());
         tipusLlicenciaDto.setDataCreacio(tl.getDataCreacio());
         tipusLlicenciaDto.setDataModificacio(tl.getDataModificacio());

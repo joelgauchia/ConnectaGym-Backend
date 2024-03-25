@@ -1,19 +1,20 @@
 package com.example.ConnectaGym.Security.dto;
 
+import com.example.ConnectaGym.Entities.Propietari;
 import com.example.ConnectaGym.Security.entity.Usuari;
 
 import java.time.LocalDateTime;
 
-public class TipusLlicenciaDto {
-    private Long id;
-    private String nom;
-    private String durada;
-    private Long mesos;
-    private double preu;
-    private String tipus;
-    private Usuari creador;
-    private LocalDateTime dataCreacio;
-    private LocalDateTime dataModificacio;
+public class GimnasDto {
+    Long id;
+    String nom;
+    String adreca;
+    String telefon;
+    String email;
+    Propietari propietari;
+    Usuari creador;
+    LocalDateTime dataCreacio;
+    LocalDateTime dataModificacio;
 
     public Long getId() {
         return id;
@@ -31,36 +32,36 @@ public class TipusLlicenciaDto {
         this.nom = nom;
     }
 
-    public String getDurada() {
-        return durada;
+    public String getAdreca() {
+        return adreca;
     }
 
-    public void setDurada(String durada) {
-        this.durada = durada;
+    public void setAdreca(String adreca) {
+        this.adreca = adreca;
     }
 
-    public Long getMesos() {
-        return mesos;
+    public String getTelefon() {
+        return telefon;
     }
 
-    public void setMesos(Long mesos) {
-        this.mesos = mesos;
+    public void setTelefon(String telefon) {
+        this.telefon = telefon;
     }
 
-    public double getPreu() {
-        return preu;
+    public String getEmail() {
+        return email;
     }
 
-    public void setPreu(double preu) {
-        this.preu = preu;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getTipus() {
-        return tipus;
+    public Propietari getPropietari() {
+        return propietari;
     }
 
-    public void setTipus(String tipus) {
-        this.tipus = tipus;
+    public void setPropietari(Propietari propietari) {
+        this.propietari = propietari;
     }
 
     public Usuari getCreador() {

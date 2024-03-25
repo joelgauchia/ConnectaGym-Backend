@@ -1,6 +1,9 @@
 package com.example.ConnectaGym.Entities;
 
 import com.example.ConnectaGym.Security.entity.Usuari;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -8,6 +11,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "gimnasos")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Gimnas {
 
     @Id
@@ -118,5 +122,4 @@ public class Gimnas {
     public void setDataModificacio(LocalDateTime dataModificacio) {
         this.dataModificacio = dataModificacio;
     }
-
 }

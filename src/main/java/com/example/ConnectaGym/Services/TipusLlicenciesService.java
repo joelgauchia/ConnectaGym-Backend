@@ -56,8 +56,9 @@ public class TipusLlicenciesService {
             TipusLlicencia tipusLlicencia = optionalTipusLlicencia.get();
             tipusLlicencia.setNom(tl.getNom());
             tipusLlicencia.setPreu(tl.getPreu());
-            tipusLlicencia.setTipus(tl.getTipus());
+            tipusLlicencia.setDurada(tl.getDurada());
             tipusLlicencia.setMesos(tl.getMesos());
+            tipusLlicencia.setTipus(tl.getTipus());
             tipusLlicencia.setDataCreacio(tl.getDataCreacio());
             tipusLlicencia.setDataModificacio(LocalDateTime.now());
             this.tipusLlicenciesRepository.save(tipusLlicencia);
@@ -65,12 +66,11 @@ public class TipusLlicenciesService {
         } else throw new RuntimeException("No s'ha trobat el tipus de llicència");
     }
 
-    public TipusLlicencia deleteTipusLlicencia(Long id) {
+    public void deleteTipusLlicencia(Long id) {
         Optional<TipusLlicencia> optionalTipusLlicencia = this.tipusLlicenciesRepository.findById(id);
         if (optionalTipusLlicencia.isPresent()) {
             TipusLlicencia tipusLlicencia = optionalTipusLlicencia.get();
             this.tipusLlicenciesRepository.deleteById(id);
-            return tipusLlicencia;
-        } else return null;
+        }
     }
 }
