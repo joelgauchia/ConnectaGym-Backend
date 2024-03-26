@@ -44,9 +44,13 @@ public class PropietarisController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> esborrarPropietari(@PathVariable("id") Long id) {
-        propietarisService.esborrarPropietari(id);
-        return ResponseEntity.ok("Propietari eliminat correctament");
+    public ResponseEntity<String> esborrarPropietari(@PathVariable Long id) {
+        try {
+            propietarisService.esborrarPropietari(id);
+            return ResponseEntity.ok("Propietari esborrat amb èxit");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
     }
 
     private List<PropietariDto> mapToPropietariDto(List<Propietari> propietaris) {

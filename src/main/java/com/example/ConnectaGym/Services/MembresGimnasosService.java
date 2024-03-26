@@ -55,8 +55,25 @@ public class MembresGimnasosService {
         }
     }
 
-    public MembreGimnas editarMembreGimnas(MembreGimnas m) {
-        return this.membresGimnasosRepository.save(m);
+    public MembreGimnas editarMembreGimnas(Long id, MembreGimnas m) {
+        Optional<MembreGimnas> membreGimnasOptional = membresGimnasosRepository.findById(id);
+        if (membreGimnasOptional.isPresent()) {
+            MembreGimnas membreGimnas = membreGimnasOptional.get();
+            membreGimnas.setNom(m.getNom());
+            membreGimnas.setEmail(m.getEmail());
+            membreGimnas.setTelefon(m.getTelefon());
+            membreGimnas.setAdreca(m.getAdreca());
+            membreGimnas.setEstat(m.getEstat());
+            membreGimnas.setGenere(m.getGenere());
+            membreGimnas.setDataNaixement(m.getDataNaixement());
+            membreGimnas.setGimnas(m.getGimnas());
+            membreGimnas.setDataCreacio(m.getDataCreacio());
+            membreGimnas.setDataModificacio(LocalDateTime.now());
+            membreGimnas.setObservacions(m.getObservacions());
+            return this.membresGimnasosRepository.save(membreGimnas);
+        } else {
+            throw new RuntimeException("No s'ha trobat el membre");
+        }
     }
 
     public void esborrarMembreGimnas(Long id) {

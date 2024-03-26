@@ -5,6 +5,7 @@ import com.example.ConnectaGym.Repositories.PropietarisRepository;
 import com.example.ConnectaGym.Security.entity.Usuari;
 import com.example.ConnectaGym.Security.repository.UsuarisRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -70,12 +71,15 @@ public class PropietarisService {
     }
 
     public void esborrarPropietari(Long id) {
-        Optional<Propietari> propietariOptional = this.propietarisRepository.findById(id);
-        if (propietariOptional.isPresent()) {
-            Propietari propietari = propietariOptional.get();
-            this.propietarisRepository.deleteById(id);
-        } else {
-            throw new RuntimeException("No s'ha trobat cap propietari amb l'id proporcionat");
+        try {
+            Optional<Propietari> propietariOptional = this.propietarisRepository.findById(id);
+            if (propietariOptional.isPresent()) {
+                this.propietarisRepository.deleteById(id);
+            } else {
+                throw new RuntimeException("No s'ha trobat cap propietari amb l'id proporcionat");
+            }
+        } catch (DataIntegrityViolationException e) {
+            throw new RuntimeException("No es pot esborrar el propietari ja que té una llicència activa o gimnasos associats.");
         }
     }
 }

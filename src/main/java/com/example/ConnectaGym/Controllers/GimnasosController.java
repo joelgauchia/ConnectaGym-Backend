@@ -43,10 +43,14 @@ public class GimnasosController {
         return this.mapToGimnasDto(gimnasosService.editarGimnas(id, g));
     }
 
-    @DeleteMapping(path="/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteGimnas(@PathVariable("id") Long id) {
-        gimnasosService.deleteGimnas(id);
-        return ResponseEntity.ok("Gimnàs eliminat correctament");
+        try {
+            gimnasosService.deleteGimnas(id);
+            return ResponseEntity.ok("Gimnàs eliminat correctament");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
     }
 
     private GimnasDto mapToGimnasDto(Gimnas gimnas) {

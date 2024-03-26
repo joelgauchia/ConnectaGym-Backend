@@ -40,7 +40,7 @@ public class MembresGimnasosController {
 
     @PutMapping("/{id}")
     public MembreDto editarMembreGimnas(@PathVariable("id") Long id, @RequestBody MembreGimnas m) {
-        return this.mapToMembreDto(membresGimnasosService.editarMembreGimnas(m));
+        return this.mapToMembreDto(membresGimnasosService.editarMembreGimnas(id, m));
     }
 
     @PostMapping("/{id}")

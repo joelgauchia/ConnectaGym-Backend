@@ -7,6 +7,7 @@ import com.example.ConnectaGym.Repositories.PropietarisRepository;
 import com.example.ConnectaGym.Security.entity.Usuari;
 import com.example.ConnectaGym.Security.repository.UsuarisRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -93,11 +94,15 @@ public class GimnasosService {
     }
 
     public void deleteGimnas(Long id) {
-        Optional<Gimnas> optionalGimnasos = this.gimnasosRepository.findById(id);
-        if (optionalGimnasos.isPresent()) {
-            Gimnas gimnasos = optionalGimnasos.get();
-            this.gimnasosRepository.deleteById(id);
+        try {
+            Optional<Gimnas> optionalGimnasos = this.gimnasosRepository.findById(id);
+            if (optionalGimnasos.isPresent()) {
+                this.gimnasosRepository.deleteById(id);
+            } else {
+                throw new RuntimeException("No s'ha trobat cap gimnàs amb l'id proporcionat");
+            }
+        } catch (DataIntegrityViolationException e) {
+            throw new RuntimeException("No es pot esborrar el gimnàs ja que té quotes o membres associats");
         }
-        else throw new RuntimeException("No s'ha trobat cap gimnàs amb l'id proporcionat");
     }
 }
