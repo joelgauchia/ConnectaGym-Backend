@@ -5,6 +5,7 @@ import com.example.ConnectaGym.Repositories.MembresGimnasosRepository;
 import com.example.ConnectaGym.Security.entity.Usuari;
 import com.example.ConnectaGym.Security.repository.UsuarisRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -77,12 +78,16 @@ public class MembresGimnasosService {
     }
 
     public void esborrarMembreGimnas(Long id) {
-        Optional<MembreGimnas> membreGimnasOptional = this.membresGimnasosRepository.findById(id);
-        if (membreGimnasOptional.isPresent()) {
-            MembreGimnas membreGimnas = membreGimnasOptional.get();
-            this.membresGimnasosRepository.deleteById(id);
-        } else {
-            throw new RuntimeException("No s'ha trobat el gimnàs");
+        try {
+            Optional<MembreGimnas> membreGimnasOptional = this.membresGimnasosRepository.findById(id);
+            if (membreGimnasOptional.isPresent()) {
+                this.membresGimnasosRepository.deleteById(id);
+            } else {
+                throw new RuntimeException("No s'ha trobat el gimnàs");
+            }
+        } catch (DataIntegrityViolationException e) {
+            throw new RuntimeException("No es pot esborrar el membre ja que té un pagament actiu");
         }
+
     }
 }

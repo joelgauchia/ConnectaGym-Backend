@@ -43,10 +43,14 @@ public class MembresGimnasosController {
         return this.mapToMembreDto(membresGimnasosService.editarMembreGimnas(id, m));
     }
 
-    @PostMapping("/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> baixaMembreGimnas(@PathVariable("id") Long id) {
-        membresGimnasosService.esborrarMembreGimnas(id);
-        return ResponseEntity.ok("Membre donat de baixa correctament");
+        try {
+            membresGimnasosService.esborrarMembreGimnas(id);
+            return ResponseEntity.ok("Membre esborrat amb èxit");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
     }
 
     private MembreDto mapToMembreDto(MembreGimnas membreGimnas) {

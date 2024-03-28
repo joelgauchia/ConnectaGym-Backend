@@ -1,41 +1,19 @@
-package com.example.ConnectaGym.Entities;
+package com.example.ConnectaGym.Security.dto;
 
-import jakarta.persistence.*;
+import com.example.ConnectaGym.Entities.Gimnas;
+import com.example.ConnectaGym.Entities.MembreGimnas;
+import com.example.ConnectaGym.Entities.Quota;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
-@Entity
-@Table(name = "pagaments")
-public class Pagament {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Id")
+public class PagamentDto {
     private Long id;
-
-    @ManyToOne
-    @JoinColumn(name = "IdMembre", referencedColumnName = "Id")
     private MembreGimnas membre;
-    
-    @ManyToOne
-    @JoinColumn(name = "IdQuota", referencedColumnName = "Id")
     private Quota quota;
-
-    @Column(name = "Quantitat")
-    private Long quantitat;
-
-    @Column(name = "DataInici")
+    private double quantitat;
     private LocalDateTime dataInici;
-
-    @Column(name = "DataFinal")
     private LocalDateTime dataFinal;
-
-    @ManyToOne
-    @JoinColumn(name = "IdGimnas", referencedColumnName = "Id")
     private Gimnas gimnas;
-
-    // Getters y setters
 
     public Long getId() {
         return id;
@@ -52,20 +30,20 @@ public class Pagament {
     public void setMembre(MembreGimnas membre) {
         this.membre = membre;
     }
-    
+
     public Quota getQuota() {
         return quota;
     }
-    
+
     public void setQuota(Quota quota) {
         this.quota = quota;
     }
-    
-    public Long getQuantitat() {
+
+    public double getQuantitat() {
         return quantitat;
     }
 
-    public void setQuantitat(Long quantitat) {
+    public void setQuantitat(double quantitat) {
         this.quantitat = quantitat;
     }
 
