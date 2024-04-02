@@ -5,6 +5,7 @@ import com.example.ConnectaGym.Repositories.TipusLlicenciesRepository;
 import com.example.ConnectaGym.Security.entity.Usuari;
 import com.example.ConnectaGym.Security.repository.UsuarisRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -67,10 +68,15 @@ public class TipusLlicenciesService {
     }
 
     public void deleteTipusLlicencia(Long id) {
-        Optional<TipusLlicencia> optionalTipusLlicencia = this.tipusLlicenciesRepository.findById(id);
-        if (optionalTipusLlicencia.isPresent()) {
-            TipusLlicencia tipusLlicencia = optionalTipusLlicencia.get();
-            this.tipusLlicenciesRepository.deleteById(id);
+        try {
+            Optional<TipusLlicencia> optionalTipusLlicencia = this.tipusLlicenciesRepository.findById(id);
+            if (optionalTipusLlicencia.isPresent()) {
+                this.tipusLlicenciesRepository.deleteById(id);
+            } else {
+                throw new RuntimeException("No s'ha trobat cap tipus de llicència amb l'id proporcionat");
+            }
+        } catch (DataIntegrityViolationException e) {
+            throw new RuntimeException("No es pot esborrar el tipus de llicència ja que hi ha una llicència activa amb aquest");
         }
     }
 }

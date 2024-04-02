@@ -46,8 +46,12 @@ public class TipusLlicenciesController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteTipusLlicencia(@PathVariable("id") Long id) {
-        tipusLlicenciesService.deleteTipusLlicencia(id);
-        return ResponseEntity.ok("Tipus de llicència eliminat correctament");
+        try {
+            tipusLlicenciesService.deleteTipusLlicencia(id);
+            return ResponseEntity.ok("Tipus de llicència eliminat correctament");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
     }
 
     private List<TipusLlicenciaDto> mapToTipusLlicenciaDto(List<TipusLlicencia> tipusLlicencia) {

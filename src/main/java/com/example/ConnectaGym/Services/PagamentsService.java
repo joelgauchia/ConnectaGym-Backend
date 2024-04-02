@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,12 +24,20 @@ public class PagamentsService {
         return this.pagamentsRepository.findAll();
     }
 
-    public Pagament getPagamentById(Long id) {
-        Optional<Pagament> pagamentOptional = this.pagamentsRepository.findById(id);
+    public List<Pagament> getPagamentsInactiusByMembreId(Long membreId) {
+        return pagamentsRepository.findByMembreIdAndDataFinalBefore(membreId, LocalDateTime.now());
+    }
+
+    public Pagament getPagamentByMembreId(Long membreId) {
+        Optional<Pagament> pagamentOptional = pagamentsRepository.findByMembreIdAndDataFinalAfter(membreId, LocalDateTime.now());
         return pagamentOptional.orElse(null);
     }
 
     public Pagament afegirPagament(Pagament p) {
+        boolean pagamentVigent = existeixPagamentVigentPerMembre(p.getMembre().getId());
+        if (pagamentVigent) {
+            throw new RuntimeException("Ja existeix un pagament per aquest membre");
+        }
         logger.info(p.getDataInici() + " " + p.getDataFinal());
         return this.pagamentsRepository.save(p);
     }
@@ -60,5 +69,9 @@ public class PagamentsService {
         } catch (DataIntegrityViolationException e) {
             throw new RuntimeException("No es pot esborrar el pagament ja que té una relació activa.");
         }
+    }
+
+    private boolean existeixPagamentVigentPerMembre(Long membreId) {
+        return pagamentsRepository.existsByMembreIdAndDataFinalAfter(membreId, LocalDateTime.now());
     }
 }

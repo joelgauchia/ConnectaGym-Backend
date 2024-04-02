@@ -24,8 +24,13 @@ public class PagamentsController {
     }
 
     @GetMapping("/{id}")
-    public Pagament getPagamentById(@PathVariable("id") Long id) {
-        return this.pagamentsService.getPagamentById(id);
+    public List<Pagament> getPagamentsInactiusByMembreId(@PathVariable("id") Long id) {
+        return this.pagamentsService.getPagamentsInactiusByMembreId(id);
+    }
+
+    @GetMapping("/pagament/{membreId}")
+    public Pagament getPagamentByMembreId(@PathVariable Long membreId) {
+        return pagamentsService.getPagamentByMembreId(membreId);
     }
 
     @PostMapping("/crear")
