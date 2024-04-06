@@ -23,6 +23,11 @@ public class GimnasosController {
         return this.mapToGimnasDto(gimnasosService.getGimnasos());
     }
 
+    @GetMapping("/llistat-actiu")
+    public List<GimnasDto> getGimnasosActius() {
+        return this.mapToGimnasDto(gimnasosService.getGimnasosWithActiveCreator());
+    }
+
     @GetMapping(path="/{id}")
     public GimnasDto getGimnasById(@PathVariable("id") Long id) {
         return this.mapToGimnasDto(gimnasosService.getGimnasById(id));

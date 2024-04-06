@@ -25,6 +25,10 @@ public class TipusLlicenciesService {
         return this.tipusLlicenciesRepository.findAll();
     }
 
+    public List<TipusLlicencia> getTipusLlicenciaAmbCreadorActiu() {
+        return this.tipusLlicenciesRepository.findAllByCreadorActiu();
+    }
+
     public TipusLlicencia getTipusLlicenciaById(Long id) {
         Optional<TipusLlicencia> optionalTipusLlicencia = this.tipusLlicenciesRepository.findById(id);
         return optionalTipusLlicencia.orElseGet(TipusLlicencia::new);

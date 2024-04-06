@@ -23,6 +23,11 @@ public class PropietarisController {
         return this.mapToPropietariDto(propietarisService.getPropietaris());
     }
 
+    @GetMapping("/llistat-actiu")
+    public List<PropietariDto> getPropietarisActius() {
+        return this.mapToPropietariDto(propietarisService.getPropietarisWithActiveCreator());
+    }
+
     @GetMapping("/{id}")
     public PropietariDto getPropietariById(@PathVariable("id") Long id) {
         return this.mapToPropietariDto(propietarisService.getPropietariById(id));

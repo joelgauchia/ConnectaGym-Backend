@@ -25,6 +25,10 @@ public class PropietarisService {
         return this.propietarisRepository.findAll();
     }
 
+    public List<Propietari> getPropietarisWithActiveCreator() {
+        return this.propietarisRepository.findAllByCreadorActiu();
+    }
+
     public Propietari getPropietariById(Long id) {
         Optional<Propietari> propietariOptional = this.propietarisRepository.findById(id);
         return propietariOptional.orElse(null);

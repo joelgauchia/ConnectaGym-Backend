@@ -24,6 +24,11 @@ public class TipusLlicenciesController {
         return this.mapToTipusLlicenciaDto(tipusLlicenciesService.getTipusLlicencia());
     }
 
+    @GetMapping("/llistat-actiu")
+    public List<TipusLlicenciaDto> getTipusLlicenciaActius() {
+        return this.mapToTipusLlicenciaDto(tipusLlicenciesService.getTipusLlicenciaAmbCreadorActiu());
+    }
+
     @GetMapping("/{id}")
     public TipusLlicenciaDto getTipusLlicenciaById(@PathVariable("id") Long id) {
         return this.mapToTipusLlicenciaDto(tipusLlicenciesService.getTipusLlicenciaById(id));

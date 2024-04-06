@@ -25,6 +25,10 @@ public class QuotesService {
         return this.quotesRepository.findAll();
     }
 
+    public List<Quota> getQuotesWithActiveCreator() {
+        return this.quotesRepository.findAllByCreadorActiu();
+    }
+
     public List<Quota> getQuotesByGimnasNom(String nomGimnas) {
         return quotesRepository.findByGimnas_Nom(nomGimnas);
     }

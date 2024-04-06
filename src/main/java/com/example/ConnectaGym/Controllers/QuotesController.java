@@ -23,6 +23,11 @@ public class QuotesController {
         return this.mapToQuotaDto(quotesService.getQuotes());
     }
 
+    @GetMapping("/llistat-actiu")
+    public List<QuotaDto> getQuotesActives() {
+        return this.mapToQuotaDto(quotesService.getQuotesWithActiveCreator());
+    }
+
     @GetMapping("/perGimnas")
     public List<QuotaDto> getQuotesByGimnasNom(@RequestParam("nomGimnas") String nomGimnas) {
         return this.mapToQuotaDto(quotesService.getQuotesByGimnasNom(nomGimnas));

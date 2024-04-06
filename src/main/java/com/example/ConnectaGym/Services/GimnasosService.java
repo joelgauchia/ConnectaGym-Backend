@@ -30,6 +30,10 @@ public class GimnasosService {
         return this.gimnasosRepository.findAll();
     }
 
+    public List<Gimnas> getGimnasosWithActiveCreator() {
+        return this.gimnasosRepository.findAllByCreadorActiu();
+    }
+
     public Gimnas getGimnasById(Long id) {
         Optional<Gimnas> gimnasosOptional = this.gimnasosRepository.findById(id);
         return gimnasosOptional.orElse(null);

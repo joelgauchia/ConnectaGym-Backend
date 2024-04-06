@@ -25,6 +25,10 @@ public class MembresGimnasosService {
         return this.membresGimnasosRepository.findAll();
     }
 
+    public List<MembreGimnas> getMembresGimnasosWithActiveCreator() {
+        return this.membresGimnasosRepository.findAllByCreadorActiu();
+    }
+
     public MembreGimnas getMembreGimnasById(Long id) {
         Optional<MembreGimnas> membreGimnasOptional = this.membresGimnasosRepository.findById(id);
         return membreGimnasOptional.orElse(null);

@@ -6,6 +6,7 @@ import com.example.ConnectaGym.Security.service.UsuarisService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,8 +44,12 @@ public class UsuarisController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> eliminarUsuari(@PathVariable("id") String nomUsuari) {
-        usuarisService.eliminarUsuari(nomUsuari);
-        return ResponseEntity.ok("Usuari eliminat correctament");
+        try {
+            usuarisService.eliminarUsuari(nomUsuari);
+            return ResponseEntity.ok("Usuari eliminat correctament");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
     }
 
     private List<UsuariDto> mapToUsuariDto(List<Usuari> usuaris) {
