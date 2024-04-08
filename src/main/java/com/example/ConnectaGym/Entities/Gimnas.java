@@ -90,7 +90,6 @@ public class Gimnas {
         this.email = email;
     }
 
-    @JsonBackReference
     public Propietari getPropietari() {
         return propietari;
     }

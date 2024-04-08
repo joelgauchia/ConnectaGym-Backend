@@ -45,11 +45,9 @@ public class GimnasosService {
         String telefonGimnas = g.getTelefon();
 
         if (g.getPropietari().getTipus().equals("INDIVIDUAL")) {
-            Optional<Propietari> optPropietari = this.propietarisRepository.findById(g.getPropietari().getId());
-            if (optPropietari.isPresent()) {
-                Propietari propietari = optPropietari.get();
-                if (!propietari.getGimnasos().isEmpty())
-                    throw new RuntimeException("El propietari seleccionat ja té un gimnas associat");
+            List<Gimnas> gimnasosPropietari = gimnasosRepository.findByPropietariId(g.getPropietari().getId());
+            if (!gimnasosPropietari.isEmpty()) {
+                throw new RuntimeException("El propietari seleccionat ja té un gimnàs associat");
             }
         }
         if (gimnasosRepository.existsByNom(nomGimnas)) {
@@ -73,7 +71,6 @@ public class GimnasosService {
             Gimnas gimnasGuardat = this.gimnasosRepository.save(g);
 
             Propietari propietari = gimnasGuardat.getPropietari();
-            propietari.setGimnas(gimnasGuardat);
             this.propietarisRepository.save(propietari);
             return gimnasGuardat;
         } else {

@@ -48,19 +48,7 @@ public class Propietari {
     @Column(name = "DataModificacio")
     private LocalDateTime dataModificacio;
 
-    @OneToMany(mappedBy = "propietari", cascade = CascadeType.ALL)
-    private Set<Gimnas> gimnasos = new HashSet<>();
-
     // Getters i setters
-
-    @JsonManagedReference
-    public Set<Gimnas> getGimnasos() {
-        return gimnasos;
-    }
-
-    public void setGimnas(Gimnas gimnas) {
-        this.gimnasos.add(gimnas);
-    }
 
     public Long getId() {
         return id;

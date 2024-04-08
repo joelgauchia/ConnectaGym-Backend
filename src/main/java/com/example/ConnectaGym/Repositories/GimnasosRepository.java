@@ -14,6 +14,8 @@ public interface GimnasosRepository extends JpaRepository<Gimnas, Long> {
     boolean existsByEmail(String email);
     boolean existsByTelefon(String telefon);
 
+    List<Gimnas> findByPropietariId(Long propietariId);
+
     @Query("SELECT g FROM Gimnas g WHERE g.creador.actiu = true")
     List<Gimnas> findAllByCreadorActiu();
 }
