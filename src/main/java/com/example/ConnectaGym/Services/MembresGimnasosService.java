@@ -46,10 +46,9 @@ public class MembresGimnasosService {
         }
 
         String nomUsuariCreador = m.getCreador().getNomUsuari();
-        List<Usuari> usuarisCreador = usuarisRepository.findByNomUsuari(nomUsuariCreador);
+        Usuari usuariCreador = usuarisRepository.findByNomUsuari(nomUsuariCreador);
 
-        if (!usuarisCreador.isEmpty()) {
-            Usuari usuariCreador = usuarisCreador.get(0);
+        if (usuariCreador != null) {
             m.setCreador(usuariCreador);
             m.setEstat("SENSE");
             m.setDataCreacio(LocalDateTime.now());

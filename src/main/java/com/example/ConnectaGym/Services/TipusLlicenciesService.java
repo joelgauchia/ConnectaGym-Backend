@@ -42,10 +42,9 @@ public class TipusLlicenciesService {
 
         String nomUsuariCreador = tl.getCreador().getNomUsuari();
 
-        List<Usuari> usuarisCreador = usuarisRepository.findByNomUsuari(nomUsuariCreador);
+        Usuari usuariCreador = usuarisRepository.findByNomUsuari(nomUsuariCreador);
 
-        if (!usuarisCreador.isEmpty()) {
-            Usuari usuariCreador = usuarisCreador.get(0);
+        if (usuariCreador != null) {
             tl.setCreador(usuariCreador);
             tl.setDataCreacio(LocalDateTime.now());
             tl.setDataModificacio(LocalDateTime.now());

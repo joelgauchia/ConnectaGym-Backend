@@ -32,7 +32,7 @@ public class LlicenciesController {
     @PostMapping("/crear")
     public ResponseEntity<String> crearLlicencia(@RequestBody Llicencia ll) {
         try {
-            Llicencia llicenciaCreada = llicenciesService.afegirLlicencia(ll);
+            Llicencia llicenciaCreada = llicenciesService.afegirLlicencia(ll, false);
             return ResponseEntity.status(HttpStatus.CREATED).body("LLicència creada amb èxit");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error en la creació de la llicència: " + e.getMessage());
@@ -47,7 +47,7 @@ public class LlicenciesController {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No s'ha trobat cap llicència amb l'id especificat");
             }
             llicencia.setActiva(false);
-            llicenciesService.afegirLlicencia(llicencia);
+            llicenciesService.afegirLlicencia(llicencia, true);
             return ResponseEntity.ok("Llicència desactivada amb èxit");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error en la desactivació de la llicència: " + e.getMessage());

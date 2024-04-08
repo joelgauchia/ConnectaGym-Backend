@@ -46,8 +46,15 @@ public class UsuarisService {
 
     public List<Usuari> getUsuaris() { return usuarisRepository.findAll(); }
 
-    public List<Usuari> getByNomUsuari(String nomUsuari) {
+    public Usuari getByNomUsuari(String nomUsuari) {
         return usuarisRepository.findByNomUsuari(nomUsuari);
+    }
+
+    public Usuari getByNomUsuariActiu(String nomUsuari) {
+        Usuari usuari = usuarisRepository.findByNomUsuariAndActiuIsTrue(nomUsuari);
+        if (usuari != null) {
+            return usuari;
+        } else throw new RuntimeException("No s'ha trobat cap usuari actiu amb aquest nom d'usuari");
     }
 
     public Optional<Usuari> getByNomUsuariOrEmail(String nomOrEmail) {
@@ -91,16 +98,15 @@ public class UsuarisService {
     }
 
     public Usuari actualitzarUsuari(String nomUsuari, Usuari usuariEditat) {
-        List<Usuari> usuaris = usuarisRepository.findByNomUsuari(nomUsuari);
-        if (!usuaris.isEmpty()) {
-            Usuari usuari = usuaris.get(0);
-            usuari.setNomUsuari(usuariEditat.getNomUsuari());
-            usuari.setNom(usuariEditat.getNom());
-            usuari.setEmail(usuariEditat.getEmail());
-            usuari.setActiu(usuariEditat.getActiu());
-            usuari.setDataCreacio(usuariEditat.getDataCreacio());
-            usuari.setDataModificacio(LocalDateTime.now());
-            return usuarisRepository.save(usuari);
+        Usuari usuariExistent = usuarisRepository.findByNomUsuari(nomUsuari);
+        if (usuariExistent != null) {
+            usuariExistent.setNomUsuari(usuariEditat.getNomUsuari());
+            usuariExistent.setNom(usuariEditat.getNom());
+            usuariExistent.setEmail(usuariEditat.getEmail());
+            usuariExistent.setActiu(usuariEditat.getActiu());
+            usuariExistent.setDataCreacio(usuariEditat.getDataCreacio());
+            usuariExistent.setDataModificacio(LocalDateTime.now());
+            return usuarisRepository.save(usuariExistent);
         } else {
             throw new RuntimeException("No s'ha trobat cap usuari amb el nom d'usuari proporcionat");
         }
@@ -134,10 +140,9 @@ public class UsuarisService {
 
     public void eliminarUsuari(String nomUsuari) {
         try {
-            List<Usuari> usuaris = usuarisRepository.findByNomUsuari(nomUsuari);
-            if (!usuaris.isEmpty()) {
-                Usuari usuari = usuaris.get(0);
-                usuarisRepository.delete(usuari);
+            Usuari usuariExistent = usuarisRepository.findByNomUsuari(nomUsuari);
+            if (usuariExistent != null) {
+                usuarisRepository.delete(usuariExistent);
             } else {
                 throw new RuntimeException("No s'ha trobat cap usuari amb el nom d'usuari proporcionat");
             }

@@ -27,7 +27,22 @@ public class UsuarisController {
 
     @GetMapping("/{id}")
     public UsuariDto getUsuariByUsername(@PathVariable("id") String username) {
-        return this.mapToUsuariDto(this.usuarisService.getByNomUsuari(username)).get(0);
+        try {
+            Usuari usuari = this.usuarisService.getByNomUsuari(username);
+            return this.mapToUsuariDto(usuari);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @GetMapping("/actiu/{id}")
+    public UsuariDto getUsuariByUsernameActiu(@PathVariable("id") String username) {
+        try {
+            Usuari usuari = this.usuarisService.getByNomUsuariActiu(username);
+            return this.mapToUsuariDto(usuari);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @PutMapping("/{id}")

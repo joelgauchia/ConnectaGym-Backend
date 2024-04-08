@@ -42,10 +42,9 @@ public class PropietarisService {
         }
 
         String nomUsuariCreador = p.getCreador().getNomUsuari();
-        List<Usuari> usuarisCreador = usuarisRepository.findByNomUsuari(nomUsuariCreador);
+        Usuari usuariCreador = usuarisRepository.findByNomUsuari(nomUsuariCreador);
 
-        if (!usuarisCreador.isEmpty()) {
-            Usuari usuariCreador = usuarisCreador.get(0);
+        if (usuariCreador != null) {
             p.setCreador(usuariCreador);
             p.setDataCreacio(LocalDateTime.now());
             p.setDataModificacio(LocalDateTime.now());

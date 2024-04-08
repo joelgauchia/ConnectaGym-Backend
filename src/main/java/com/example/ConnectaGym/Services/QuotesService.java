@@ -44,10 +44,9 @@ public class QuotesService {
         }
 
         String nomUsuariCreador = q.getCreador().getNomUsuari();
-        List<Usuari> usuarisCreador = usuarisRepository.findByNomUsuari(nomUsuariCreador);
+        Usuari usuariCreador = usuarisRepository.findByNomUsuari(nomUsuariCreador);
 
-        if (!usuarisCreador.isEmpty()) {
-            Usuari usuariCreador = usuarisCreador.get(0);
+        if (usuariCreador != null) {
             q.setCreador(usuariCreador);
             q.setDataCreacio(LocalDateTime.now());
             q.setDataModificacio(LocalDateTime.now());

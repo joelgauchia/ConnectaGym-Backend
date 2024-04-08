@@ -33,7 +33,7 @@ public class LlicenciesService {
         return optionalLlicencia.orElseGet(Llicencia::new);
     }
 
-    public Llicencia afegirLlicencia(Llicencia ll) {
+    public Llicencia afegirLlicencia(Llicencia ll, boolean desactivar) {
         if (ll.getActiva() && llicenciesRepository.existsByPropietariNom(ll.getPropietari().getNom())) {
             throw new RuntimeException("Ja existeix una llicència per aquest propietari.");
         }
@@ -44,9 +44,11 @@ public class LlicenciesService {
             throw new RuntimeException("No pots seleccionar aquest tipus de llicència per aquest propietari.");
         }
         ll.setDataInici(LocalDateTime.now());
-        if ((Objects.equals(ll.getTipusLlicencia().getDurada(), "Mensual")) || Objects.equals(ll.getTipusLlicencia().getDurada(), "MENSUAL")) ll.setDataVenciment(ll.getDataInici().plusMonths(1));
-        if ((Objects.equals(ll.getTipusLlicencia().getDurada(), "Trimestral")) || Objects.equals(ll.getTipusLlicencia().getDurada(), "TRIMESTRAL")) ll.setDataVenciment(ll.getDataInici().plusMonths(3));
-        if ((Objects.equals(ll.getTipusLlicencia().getDurada(), "Anual")) || Objects.equals(ll.getTipusLlicencia().getDurada(), "ANUAL")) ll.setDataVenciment(ll.getDataInici().plusMonths(12));
+        if (!desactivar) {
+            if ((Objects.equals(ll.getTipusLlicencia().getDurada(), "Mensual")) || Objects.equals(ll.getTipusLlicencia().getDurada(), "MENSUAL")) ll.setDataVenciment(ll.getDataInici().plusMonths(1));
+            if ((Objects.equals(ll.getTipusLlicencia().getDurada(), "Trimestral")) || Objects.equals(ll.getTipusLlicencia().getDurada(), "TRIMESTRAL")) ll.setDataVenciment(ll.getDataInici().plusMonths(3));
+            if ((Objects.equals(ll.getTipusLlicencia().getDurada(), "Anual")) || Objects.equals(ll.getTipusLlicencia().getDurada(), "ANUAL")) ll.setDataVenciment(ll.getDataInici().plusMonths(12));
+        }
         this.llicenciesRepository.save(ll);
         return ll;
     }

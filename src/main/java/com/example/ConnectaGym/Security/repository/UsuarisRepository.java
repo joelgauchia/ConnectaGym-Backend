@@ -9,9 +9,10 @@ import java.util.Optional;
 
 @Repository
 public interface UsuarisRepository extends JpaRepository<Usuari, Long> {
-    List<Usuari> findByNomUsuari(String nomUsuari);
+    Usuari findByNomUsuari(String nomUsuari);
     Optional<Usuari> findByNomUsuariOrEmail(String nomUsuari, String email);
     Optional<Usuari> findByTokenPassword(String tokenPassword);
     boolean existsByNomUsuari(String nomUsuari);
     boolean existsByEmail(String email);
+    Usuari findByNomUsuariAndActiuIsTrue(String nomUsuari);
 }

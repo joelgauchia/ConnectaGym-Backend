@@ -49,6 +49,7 @@ public class MainSecurity {
 
         http.authorizeHttpRequests(auth -> auth.requestMatchers(
                 "/auth/**",
+                        "usuaris/**",
                         "/email-password/**",
                         "/v2/api-docs/**",
                         "/swagger-ui/**",
