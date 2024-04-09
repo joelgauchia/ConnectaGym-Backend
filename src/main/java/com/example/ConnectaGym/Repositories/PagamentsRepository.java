@@ -10,6 +10,7 @@ import java.util.Optional;
 
 @Repository
 public interface PagamentsRepository extends JpaRepository<Pagament, Long> {
+    List<Pagament> findByGimnasId(Long gimnasId);
     boolean existsByMembreIdAndDataFinalAfter(Long membreId, LocalDateTime dataFinal);
     Optional<Pagament> findByMembreIdAndDataFinalAfter(Long membreId, LocalDateTime dataFinal);
     List<Pagament> findByMembreIdAndDataFinalBefore(Long membreId, LocalDateTime dataFinal);

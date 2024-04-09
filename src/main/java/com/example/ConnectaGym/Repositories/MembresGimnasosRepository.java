@@ -14,6 +14,8 @@ public interface MembresGimnasosRepository extends JpaRepository<MembreGimnas, L
     boolean existsByEmail(String email);
     boolean existsByTelefon(String telefon);
 
+    List<MembreGimnas> findByGimnasId(Long gimnasId);
+
     @Query("SELECT m FROM MembreGimnas m WHERE m.creador.actiu = true")
     List<MembreGimnas> findAllByCreadorActiu();
 }

@@ -28,6 +28,11 @@ public class MembresGimnasosController {
         return this.mapToMembreDto(membresGimnasosService.getMembresGimnasosWithActiveCreator());
     }
 
+    @GetMapping("/llistat/{id}")
+    public List<MembreDto> getMembresGimnasosFromGimnas(@PathVariable("id") Long id) {
+        return this.mapToMembreDto(membresGimnasosService.getMembresGimnasosFromGimnas(id));
+    }
+
     @GetMapping("/{id}")
     public MembreDto getMembreGimnasById(@PathVariable("id") Long id) {
         return this.mapToMembreDto(membresGimnasosService.getMembreGimnasById(id));

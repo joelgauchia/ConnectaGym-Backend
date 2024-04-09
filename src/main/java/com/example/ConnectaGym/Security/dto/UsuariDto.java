@@ -1,5 +1,6 @@
 package com.example.ConnectaGym.Security.dto;
 
+import com.example.ConnectaGym.Entities.Gimnas;
 import com.example.ConnectaGym.Security.entity.Rol;
 
 import java.time.LocalDateTime;
@@ -14,6 +15,7 @@ public class UsuariDto {
     private LocalDateTime dataCreacio;
     private LocalDateTime dataModificacio;
     private Set<Rol> rols = new HashSet<>();
+    private Gimnas gimnasStaff;
 
     public String getNomUsuari() {
         return nomUsuari;
@@ -69,5 +71,13 @@ public class UsuariDto {
 
     public void setRols(Set<Rol> rols) {
         this.rols = rols;
+    }
+
+    public Gimnas getGimnasStaff() {
+        return gimnasStaff;
+    }
+
+    public void setGimnasStaff(Gimnas gimnasStaff) {
+        this.gimnasStaff = gimnasStaff;
     }
 }

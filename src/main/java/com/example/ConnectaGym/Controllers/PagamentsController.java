@@ -1,6 +1,7 @@
 package com.example.ConnectaGym.Controllers;
 
 import com.example.ConnectaGym.Entities.Pagament;
+import com.example.ConnectaGym.Security.dto.MembreDto;
 import com.example.ConnectaGym.Security.dto.PagamentDto;
 import com.example.ConnectaGym.Services.PagamentsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,11 @@ public class PagamentsController {
     @GetMapping("/llistat")
     public List<PagamentDto> getPagaments() {
         return this.mapToPagamentDto(pagamentsService.getPagaments());
+    }
+
+    @GetMapping("/llistat/{id}")
+    public List<PagamentDto> getPagamentsFromGimnas(@PathVariable("id") Long id) {
+        return this.mapToPagamentDto(pagamentsService.getPagamentsFromGimnas(id));
     }
 
     @GetMapping("/{id}")

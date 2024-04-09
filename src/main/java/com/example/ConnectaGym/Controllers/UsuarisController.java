@@ -78,6 +78,7 @@ public class UsuarisController {
             usuariDto.setDataCreacio(usuari.getDataCreacio());
             usuariDto.setDataModificacio(usuari.getDataModificacio());
             usuariDto.setRols(usuari.getRols());
+            if (usuari.getGimnasStaff() != null) usuariDto.setGimnasStaff(usuari.getGimnasStaff());
             usuarisDto.add(usuariDto);
         }
         return usuarisDto;
@@ -92,6 +93,7 @@ public class UsuarisController {
         usuariDto.setDataCreacio(usuari.getDataCreacio());
         usuariDto.setDataModificacio(usuari.getDataModificacio());
         usuariDto.setRols(usuari.getRols());
+        if (usuari.getGimnasStaff() != null) usuariDto.setGimnasStaff(usuari.getGimnasStaff());
         return usuariDto;
     }
 }

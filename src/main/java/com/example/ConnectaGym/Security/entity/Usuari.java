@@ -1,5 +1,6 @@
 package com.example.ConnectaGym.Security.entity;
 
+import com.example.ConnectaGym.Entities.Gimnas;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -30,6 +31,10 @@ public class Usuari {
     @JoinTable(name = "UsuarisRol", joinColumns = @JoinColumn(name = "usuari_id"), inverseJoinColumns = @JoinColumn(name = "rol_id"))
     private Set<Rol> rols = new HashSet<>();
 
+    @ManyToOne
+    @JoinColumn(name = "id_gimnas_staff")
+    private Gimnas gimnasStaff;
+
     @Column(name = "Actiu")
     private Boolean actiu;
 
@@ -49,6 +54,17 @@ public class Usuari {
         this.actiu = actiu;
         this.dataCreacio = dataCreacio;
         this.dataModificacio = dataModificacio;
+    }
+
+    public Usuari(String nomUsuari, String email, String nom, String password, Boolean actiu, LocalDateTime dataCreacio, LocalDateTime dataModificacio, Gimnas gimnasStaff) {
+        this.nomUsuari = nomUsuari;
+        this.email = email;
+        this.nom = nom;
+        this.password = password;
+        this.actiu = actiu;
+        this.dataCreacio = dataCreacio;
+        this.dataModificacio = dataModificacio;
+        this.gimnasStaff = gimnasStaff;
     }
 
     public Long getId() {
@@ -97,6 +113,14 @@ public class Usuari {
 
     public void setRols(Set<Rol> rols) {
         this.rols = rols;
+    }
+
+    public Gimnas getGimnasStaff() {
+        return gimnasStaff;
+    }
+
+    public void setGimnasStaff(Gimnas gimnasStaff) {
+        this.gimnasStaff = gimnasStaff;
     }
 
     public Boolean getActiu() {

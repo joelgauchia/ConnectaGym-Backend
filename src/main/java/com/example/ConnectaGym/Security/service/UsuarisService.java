@@ -115,7 +115,15 @@ public class UsuarisService {
         if (existsByEmail(nouUsuari.getEmail())) {
             throw new RuntimeException("L'email ja està en ús");
         }
-        Usuari usuari = new Usuari(nouUsuari.getNomUsuari(), nouUsuari.getEmail(), nouUsuari.getNom(), passwordEncoder.encode(nouUsuari.getPassword()), true, LocalDateTime.now(), LocalDateTime.now());
+
+        Usuari usuari;
+
+        if (nouUsuari.getRols().stream().anyMatch(rol -> rol.getRolNom() == RolNom.STAFF)) {
+            usuari = new Usuari(nouUsuari.getNomUsuari(), nouUsuari.getEmail(), nouUsuari.getNom(), passwordEncoder.encode(nouUsuari.getPassword()), true, LocalDateTime.now(), LocalDateTime.now(), nouUsuari.getGimnasStaff());
+        }
+        else {
+            usuari = new Usuari(nouUsuari.getNomUsuari(), nouUsuari.getEmail(), nouUsuari.getNom(), passwordEncoder.encode(nouUsuari.getPassword()), true, LocalDateTime.now(), LocalDateTime.now());
+        }
 
         Set<Rol> rols = new HashSet<>();
 

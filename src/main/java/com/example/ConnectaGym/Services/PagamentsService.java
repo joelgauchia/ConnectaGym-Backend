@@ -1,5 +1,6 @@
 package com.example.ConnectaGym.Services;
 
+import com.example.ConnectaGym.Entities.MembreGimnas;
 import com.example.ConnectaGym.Entities.Pagament;
 import com.example.ConnectaGym.Repositories.PagamentsRepository;
 import org.slf4j.Logger;
@@ -22,6 +23,10 @@ public class PagamentsService {
 
     public List<Pagament> getPagaments() {
         return this.pagamentsRepository.findAll();
+    }
+
+    public List<Pagament> getPagamentsFromGimnas(Long gimnasId) {
+        return pagamentsRepository.findByGimnasId(gimnasId);
     }
 
     public List<Pagament> getPagamentsInactiusByMembreId(Long membreId) {
