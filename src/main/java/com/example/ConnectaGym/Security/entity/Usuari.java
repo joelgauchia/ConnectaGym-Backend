@@ -25,7 +25,6 @@ public class Usuari {
 
     @Column(name = "Password")
     private String password;
-    private String tokenPassword;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "UsuarisRol", joinColumns = @JoinColumn(name = "usuari_id"), inverseJoinColumns = @JoinColumn(name = "rol_id"))

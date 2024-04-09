@@ -61,10 +61,6 @@ public class UsuarisService {
         return usuarisRepository.findByNomUsuariOrEmail(nomOrEmail, nomOrEmail);
     }
 
-    public Optional<Usuari> getByTokenPassword(String tokenPassword) {
-        return usuarisRepository.findByTokenPassword(tokenPassword);
-    }
-
     public boolean existsByNomUsuari(String nomUsuari) {
         return usuarisRepository.existsByNomUsuari(nomUsuari);
     }
