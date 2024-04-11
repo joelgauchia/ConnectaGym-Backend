@@ -1,37 +1,17 @@
-package com.example.ConnectaGym.Entities;
+package com.example.ConnectaGym.Security.dto;
 
+import com.example.ConnectaGym.Entities.MembreGimnas;
 import com.example.ConnectaGym.Security.entity.Usuari;
-import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "missatges")
-public class Missatge {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Id")
+public class MissatgeDto {
     private Long id;
-
-    @ManyToOne
-    @JoinColumn(name = "IdMembre", referencedColumnName = "Id")
     private MembreGimnas membre;
-
-    @ManyToOne
-    @JoinColumn(name = "IdUsuari", referencedColumnName = "Id")
     private Usuari remitent;
-
-    @Column(name = "Titol")
     private String titol;
-
-    @Column(name = "Missatge")
     private String missatge;
-
-    @Column(name = "dataEnviament")
     private LocalDateTime dataEnviament;
-
-    // Getters y setters
 
     public Long getId() {
         return id;
