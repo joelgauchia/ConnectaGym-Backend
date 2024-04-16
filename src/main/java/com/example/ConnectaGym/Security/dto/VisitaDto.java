@@ -1,38 +1,17 @@
-package com.example.ConnectaGym.Entities;
+package com.example.ConnectaGym.Security.dto;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-
-import jakarta.persistence.*;
+import com.example.ConnectaGym.Entities.Gimnas;
+import com.example.ConnectaGym.Entities.MembreGimnas;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
-@Entity
-@Table(name = "Visites")
-public class Visita {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Id")
+public class VisitaDto {
     private Long id;
-
-    @ManyToOne
-    @JoinColumn(name = "idMembre", referencedColumnName = "Id")
     private MembreGimnas membreGimnas;
-
-    @Column(name = "DataVisita")
-    private LocalDateTime dataVisita;
-
-    @ManyToOne
-    @JoinColumn(name = "idGimnas", referencedColumnName = "Id")
     private Gimnas gimnas;
-
-    private Long preu;
-
+    private LocalDateTime dataVisita;
     private boolean abonat;
-
-    // Getters y setters
+    private Long preu;
 
     public Long getId() {
         return id;
@@ -45,9 +24,17 @@ public class Visita {
     public MembreGimnas getMembreGimnas() {
         return membreGimnas;
     }
-    
+
     public void setMembreGimnas(MembreGimnas membreGimnas) {
         this.membreGimnas = membreGimnas;
+    }
+
+    public Gimnas getGimnas() {
+        return gimnas;
+    }
+
+    public void setGimnas(Gimnas gimnas) {
+        this.gimnas = gimnas;
     }
 
     public LocalDateTime getDataVisita() {
@@ -56,14 +43,6 @@ public class Visita {
 
     public void setDataVisita(LocalDateTime dataVisita) {
         this.dataVisita = dataVisita;
-    }
-
-    public Gimnas getGimnas() {
-        return gimnas;
-    }
-    
-    public void setGimnas(Gimnas gimnas) {
-        this.gimnas = gimnas;
     }
 
     public boolean isAbonat() {
