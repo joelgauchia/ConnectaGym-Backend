@@ -1,5 +1,6 @@
 package com.example.ConnectaGym.Security.service;
 
+import com.example.ConnectaGym.Controllers.UsuarisController;
 import com.example.ConnectaGym.Security.dto.JwtDto;
 import com.example.ConnectaGym.Security.dto.LoginUsuari;
 import com.example.ConnectaGym.Security.dto.NouUsuari;
@@ -8,6 +9,8 @@ import com.example.ConnectaGym.Security.entity.Usuari;
 import com.example.ConnectaGym.Security.enums.RolNom;
 import com.example.ConnectaGym.Security.jwt.JwtProvider;
 import com.example.ConnectaGym.Security.repository.UsuarisRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -43,6 +46,8 @@ public class UsuarisService {
 
     @Autowired
     JwtProvider jwtProvider;
+
+    private final static Logger logger = LoggerFactory.getLogger(UsuarisService.class);
 
     public List<Usuari> getUsuaris() { return usuarisRepository.findAll(); }
 
@@ -94,6 +99,12 @@ public class UsuarisService {
     }
 
     public Usuari actualitzarUsuari(String nomUsuari, Usuari usuariEditat) {
+        Usuari usuariExistentByEmail = usuarisRepository.findByEmail(usuariEditat.getEmail());
+
+        if (usuariExistentByEmail != null && !usuariExistentByEmail.getNomUsuari().equals(usuariEditat.getNomUsuari())) {
+            throw new RuntimeException("Ja existeix un usuari amb el mateix email");
+        }
+
         Usuari usuariExistent = usuarisRepository.findByNomUsuari(nomUsuari);
         if (usuariExistent != null) {
             usuariExistent.setNomUsuari(usuariEditat.getNomUsuari());
@@ -146,7 +157,7 @@ public class UsuarisService {
         try {
             Usuari usuariExistent = usuarisRepository.findByNomUsuari(nomUsuari);
             if (usuariExistent != null) {
-                usuarisRepository.delete(usuariExistent);
+                usuarisRepository.deleteById(usuariExistent.getId());
             } else {
                 throw new RuntimeException("No s'ha trobat cap usuari amb el nom d'usuari proporcionat");
             }

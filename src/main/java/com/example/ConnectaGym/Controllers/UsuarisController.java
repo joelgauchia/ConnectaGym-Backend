@@ -46,9 +46,13 @@ public class UsuarisController {
     }
 
     @PutMapping("/{id}")
-    public UsuariDto actualitzarUsuari(@PathVariable("id") String nomUsuari, @RequestBody Usuari usuari) {
-        Usuari usuariActualitzat = usuarisService.actualitzarUsuari(nomUsuari, usuari);
-        return this.mapToUsuariDto(usuariActualitzat);
+    public ResponseEntity<String> actualitzarUsuari(@PathVariable("id") String nomUsuari, @RequestBody Usuari usuari) {
+        try {
+            Usuari usuariActualitzat = usuarisService.actualitzarUsuari(nomUsuari, usuari);
+            return ResponseEntity.status(HttpStatus.CREATED).body("Usuari editat amb èxit");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error en l'edició de l'usuari: " + e.getMessage());
+        }
     }
 
     @PostMapping("/crear")
