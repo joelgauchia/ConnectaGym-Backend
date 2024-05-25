@@ -1,5 +1,6 @@
 package com.example.ConnectaGym.Entities;
 
+import com.example.ConnectaGym.Security.entity.Usuari;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -19,14 +20,18 @@ public class TipusLlicencia {
     @Column(name = "Preu")
     private Double preu;
 
+    @Column(name = "Durada")
+    private String durada;
+
+    @Column(name = "Mesos")
+    private Long mesos;
+
     @Column(name = "Tipus")
     private String tipus;
 
-    @Column(name = "Mesos")
-    private Integer mesos;
-
-    @Column(name = "Creador")
-    private String creador;
+    @ManyToOne
+    @JoinColumn(name = "IdCreador", referencedColumnName = "Id")
+    private Usuari creador;
 
     @Column(name = "DataCreacio")
     private LocalDateTime dataCreacio;
@@ -60,6 +65,18 @@ public class TipusLlicencia {
         this.preu = preu;
     }
 
+    public String getDurada() {
+        return durada;
+    }
+
+    public void setDurada(String durada) {
+        this.durada = durada;
+    }
+
+    public Long getMesos() {
+        return mesos;
+    }
+
     public String getTipus() {
         return tipus;
     }
@@ -68,19 +85,15 @@ public class TipusLlicencia {
         this.tipus = tipus;
     }
 
-    public Integer getMesos() {
-        return mesos;
-    }
-
-    public void setMesos(Integer mesos) {
+    public void setMesos(Long mesos) {
         this.mesos = mesos;
     }
 
-    public String getCreador() {
+    public Usuari getCreador() {
         return creador;
     }
-
-    public void setCreador(String creador) {
+    
+    public void setCreador(Usuari creador) {
         this.creador = creador;
     }
 

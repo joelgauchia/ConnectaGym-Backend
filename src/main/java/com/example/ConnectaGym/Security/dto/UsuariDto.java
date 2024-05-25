@@ -1,46 +1,21 @@
-package com.example.ConnectaGym.Entities;
+package com.example.ConnectaGym.Security.dto;
 
-import jakarta.persistence.*;
+import com.example.ConnectaGym.Entities.Gimnas;
+import com.example.ConnectaGym.Security.entity.Rol;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
-@Entity
-@Table(name = "usuaris")
-public class Usuari {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Id")
-    private Long id;
-
-    @Column(name = "NomUsuari")
+public class UsuariDto {
     private String nomUsuari;
-
-    @Column(name = "Email")
     private String email;
-
-    @ManyToOne
-    @JoinColumn(name = "Rol")
-    private Rol rol;
-
-    @Column(name = "Actiu")
-    private Boolean actiu;
-
-    @Column(name = "DataCreacio")
+    private String nom;
+    private boolean actiu;
     private LocalDateTime dataCreacio;
-
-    @Column(name = "DataModificacio")
     private LocalDateTime dataModificacio;
-
-    // Getters y setters
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    private Set<Rol> rols = new HashSet<>();
+    private Gimnas gimnasStaff;
 
     public String getNomUsuari() {
         return nomUsuari;
@@ -58,19 +33,19 @@ public class Usuari {
         this.email = email;
     }
 
-    public Rol getRol() {
-        return rol;
+    public String getNom() {
+        return nom;
     }
 
-    public void setRol(Rol rol) {
-        this.rol = rol;
+    public void setNom(String nom) {
+        this.nom = nom;
     }
 
-    public Boolean getActiu() {
+    public boolean isActiu() {
         return actiu;
     }
 
-    public void setActiu(Boolean actiu) {
+    public void setActiu(boolean actiu) {
         this.actiu = actiu;
     }
 
@@ -88,5 +63,21 @@ public class Usuari {
 
     public void setDataModificacio(LocalDateTime dataModificacio) {
         this.dataModificacio = dataModificacio;
+    }
+
+    public Set<Rol> getRols() {
+        return rols;
+    }
+
+    public void setRols(Set<Rol> rols) {
+        this.rols = rols;
+    }
+
+    public Gimnas getGimnasStaff() {
+        return gimnasStaff;
+    }
+
+    public void setGimnasStaff(Gimnas gimnasStaff) {
+        this.gimnasStaff = gimnasStaff;
     }
 }

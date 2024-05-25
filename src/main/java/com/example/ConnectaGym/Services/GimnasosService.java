@@ -1,10 +1,16 @@
 package com.example.ConnectaGym.Services;
 
 import com.example.ConnectaGym.Entities.Gimnas;
+import com.example.ConnectaGym.Entities.Propietari;
 import com.example.ConnectaGym.Repositories.GimnasosRepository;
+import com.example.ConnectaGym.Repositories.PropietarisRepository;
+import com.example.ConnectaGym.Security.entity.Usuari;
+import com.example.ConnectaGym.Security.repository.UsuarisRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,29 +20,89 @@ public class GimnasosService {
     @Autowired
     GimnasosRepository gimnasosRepository;
 
+    @Autowired
+    UsuarisRepository usuarisRepository;
+
+    @Autowired
+    PropietarisRepository propietarisRepository;
+
     public List<Gimnas> getGimnasos() {
         return this.gimnasosRepository.findAll();
+    }
+
+    public List<Gimnas> getGimnasosWithActiveCreator() {
+        return this.gimnasosRepository.findAllByCreadorActiu();
     }
 
     public Gimnas getGimnasById(Long id) {
         Optional<Gimnas> gimnasosOptional = this.gimnasosRepository.findById(id);
         return gimnasosOptional.orElse(null);
     }
+
     public Gimnas afegirGimnas(Gimnas g) {
-        return this.gimnasosRepository.save(g);
-    }
+        String nomGimnas = g.getNom();
+        String emailGimnas = g.getEmail();
+        String telefonGimnas = g.getTelefon();
 
-    public Gimnas editarGimnas(Gimnas g) {
-        return this.gimnasosRepository.save(g);
-    }
-
-    public Gimnas deleteGimnas(Long id) {
-        Optional<Gimnas> optionalGimnasos = this.gimnasosRepository.findById(id);
-        if (optionalGimnasos.isPresent()) {
-            Gimnas gimnasos = optionalGimnasos.get();
-            this.gimnasosRepository.deleteById(id);
-            return gimnasos;
+        if (g.getPropietari().getTipus().equals("INDIVIDUAL")) {
+            List<Gimnas> gimnasosPropietari = gimnasosRepository.findByPropietariId(g.getPropietari().getId());
+            if (!gimnasosPropietari.isEmpty()) {
+                throw new RuntimeException("El propietari seleccionat ja té un gimnàs associat");
+            }
         }
-        else return null;
+        if (gimnasosRepository.existsByNom(nomGimnas)) {
+            throw new RuntimeException("Ja existeix un gimnàs amb aquest nom");
+        }
+        if (gimnasosRepository.existsByEmail(emailGimnas)) {
+            throw new RuntimeException("Ja existeix un gimnàs amb aquest e-mail");
+        }
+        if (gimnasosRepository.existsByTelefon(telefonGimnas)) {
+            throw new RuntimeException("Ja existeix un gimnàs amb aquest telèfon");
+        }
+        String nomUsuariCreador = g.getCreador().getNomUsuari();
+        Usuari usuariCreador = usuarisRepository.findByNomUsuari(nomUsuariCreador);
+
+        if (usuariCreador != null) {
+            g.setAdmin(usuariCreador);
+            g.setDataCreacio(LocalDateTime.now());
+            g.setDataModificacio(LocalDateTime.now());
+
+            Gimnas gimnasGuardat = this.gimnasosRepository.save(g);
+
+            Propietari propietari = gimnasGuardat.getPropietari();
+            this.propietarisRepository.save(propietari);
+            return gimnasGuardat;
+        } else {
+            throw new RuntimeException("No s'ha trobat cap usuari creador amb el nom d'usuari proporcionat");
+        }
+    }
+
+    public Gimnas editarGimnas(Long id, Gimnas g) {
+        Optional<Gimnas> gimnasos = gimnasosRepository.findById(id);
+        if (gimnasos.isPresent()) {
+            Gimnas gimnas = gimnasos.get();;
+            gimnas.setNom(g.getNom());
+            gimnas.setAdreca(g.getAdreca());
+            gimnas.setEmail(g.getEmail());
+            gimnas.setTelefon(g.getTelefon());
+            gimnas.setDataCreacio(g.getDataCreacio());
+            gimnas.setDataModificacio(LocalDateTime.now());
+            return gimnasosRepository.save(gimnas);
+        } else {
+            throw new RuntimeException("No s'ha trobat el gimnàs");
+        }
+    }
+
+    public void deleteGimnas(Long id) {
+        try {
+            Optional<Gimnas> optionalGimnasos = this.gimnasosRepository.findById(id);
+            if (optionalGimnasos.isPresent()) {
+                this.gimnasosRepository.deleteById(id);
+            } else {
+                throw new RuntimeException("No s'ha trobat cap gimnàs amb l'id proporcionat");
+            }
+        } catch (DataIntegrityViolationException e) {
+            throw new RuntimeException("No es pot esborrar el gimnàs ja que té quotes o membres associats");
+        }
     }
 }

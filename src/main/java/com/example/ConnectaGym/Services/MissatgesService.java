@@ -2,43 +2,37 @@ package com.example.ConnectaGym.Services;
 
 import com.example.ConnectaGym.Entities.Missatge;
 import com.example.ConnectaGym.Repositories.MissatgesRepository;
+import com.example.ConnectaGym.Security.entity.Usuari;
+import com.example.ConnectaGym.Security.repository.UsuarisRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class MissatgesService {
 
     @Autowired
+    private JavaMailSender mailSender;
+
+    @Autowired
     private MissatgesRepository missatgesRepository;
 
-    public List<Missatge> getMissatges() {
-        return this.missatgesRepository.findAll();
-    }
+    @Autowired
+    private UsuarisRepository usuarisRepository;
 
-    public Missatge getMissatgeById(Long id) {
-        Optional<Missatge> missatgeOptional = this.missatgesRepository.findById(id);
-        return missatgeOptional.orElse(null);
-    }
+    public Missatge enviarMissatge(Missatge missatge) {
+        Usuari remitent = usuarisRepository.findByNomUsuari(missatge.getRemitent().getNomUsuari());
+        if (remitent == null) throw new RuntimeException("L'usuari remitent no existeix a la base de dades.");
 
-    public Missatge afegirMissatge(Missatge missatge) {
-        return this.missatgesRepository.save(missatge);
-    }
+        SimpleMailMessage email = new SimpleMailMessage();
+        email.setTo(missatge.getMembre().getEmail());
+        email.setSubject(missatge.getTitol());
+        email.setText(missatge.getMissatge());
+        mailSender.send(email);
 
-    public Missatge editarMissatge(Missatge missatge) {
-        return this.missatgesRepository.save(missatge);
-    }
+        missatge.setRemitent(remitent);
 
-    public Missatge esborrarMissatge(Long id) {
-        Optional<Missatge> missatgeOptional = this.missatgesRepository.findById(id);
-        if (missatgeOptional.isPresent()) {
-            Missatge missatge = missatgeOptional.get();
-            this.missatgesRepository.deleteById(id);
-            return missatge;
-        } else {
-            return null;
-        }
+        return missatgesRepository.save(missatge);
     }
 }

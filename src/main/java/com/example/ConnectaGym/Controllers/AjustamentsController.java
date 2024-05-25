@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequestMapping(path="/ajustaments")
+@RequestMapping("/ajustaments")
 @RestController
 public class AjustamentsController {
 

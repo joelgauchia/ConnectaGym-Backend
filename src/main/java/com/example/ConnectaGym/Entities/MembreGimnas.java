@@ -1,5 +1,6 @@
 package com.example.ConnectaGym.Entities;
 
+import com.example.ConnectaGym.Security.entity.Usuari;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
@@ -24,20 +25,25 @@ public class MembreGimnas {
     @Column(name = "Adreca")
     private String adreca;
 
-    @Column(name = "DataNaixement")
-    private LocalDateTime dataNaixement;
-
     @Column(name = "Genere")
     private String genere;
+
+    @Column(name = "Estat")
+    private String estat;
+
+    @Column(name = "DataNaixement")
+    private LocalDateTime dataNaixement;
 
     @Column(name = "Observacions")
     private String observacions;
 
-    @Column(name = "Gimnas")
-    private String gimnas;
+    @ManyToOne
+    @JoinColumn(name = "IdGimnas", referencedColumnName = "Id")
+    private Gimnas gimnas;
 
-    @Column(name = "Creador")
-    private String creador;
+    @ManyToOne
+    @JoinColumn(name = "IdCreador", referencedColumnName = "Id")
+    private Usuari creador;
 
     @Column(name = "DataCreacio")
     private LocalDateTime dataCreacio;
@@ -103,6 +109,14 @@ public class MembreGimnas {
         this.genere = genere;
     }
 
+    public String getEstat() {
+        return estat;
+    }
+
+    public void setEstat(String estat) {
+        this.estat = estat;
+    }
+
     public String getObservacions() {
         return observacions;
     }
@@ -111,22 +125,22 @@ public class MembreGimnas {
         this.observacions = observacions;
     }
 
-    public String getGimnas() {
+    public Gimnas getGimnas() {
         return gimnas;
     }
 
-    public void setGimnas(String gimnas) {
+    public void setGimnas(Gimnas gimnas) {
         this.gimnas = gimnas;
     }
-
-    public String getCreador() {
+    
+    public Usuari getCreador() {
         return creador;
     }
 
-    public void setCreador(String creador) {
+    public void setCreador(Usuari creador) {
         this.creador = creador;
     }
-
+    
     public LocalDateTime getDataCreacio() {
         return dataCreacio;
     }

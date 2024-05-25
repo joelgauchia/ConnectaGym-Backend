@@ -1,10 +1,14 @@
 package com.example.ConnectaGym.Controllers;
 
 import com.example.ConnectaGym.Entities.Propietari;
+import com.example.ConnectaGym.Security.dto.PropietariDto;
 import com.example.ConnectaGym.Services.PropietarisService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RequestMapping(path="/propietaris")
@@ -14,28 +18,79 @@ public class PropietarisController {
     @Autowired
     PropietarisService propietarisService;
 
-    @GetMapping()
-    public List<Propietari> getPropietaris() {
-        return this.propietarisService.getPropietaris();
+    @GetMapping("/llistat")
+    public List<PropietariDto> getPropietaris() {
+        return this.mapToPropietariDto(propietarisService.getPropietaris());
+    }
+
+    @GetMapping("/llistat-actiu")
+    public List<PropietariDto> getPropietarisActius() {
+        return this.mapToPropietariDto(propietarisService.getPropietarisWithActiveCreator());
     }
 
     @GetMapping("/{id}")
-    public Propietari getPropietariById(@PathVariable("id") Long id) {
-        return this.propietarisService.getPropietariById(id);
+    public PropietariDto getPropietariById(@PathVariable("id") Long id) {
+        return this.mapToPropietariDto(propietarisService.getPropietariById(id));
     }
 
-    @PostMapping()
-    public Propietari nouPropietari(@RequestBody Propietari p) {
-        return this.propietarisService.afegirPropietari(p);
+    @PostMapping("/crear")
+    public ResponseEntity<String> crearPropietari(@RequestBody Propietari propietari) {
+        try {
+            Propietari propietariCreat = propietarisService.afegirPropietari(propietari);
+            return ResponseEntity.status(HttpStatus.CREATED).body("Propietari creat amb èxit amb ID: " + propietariCreat.getId());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error en la creació del propietari: " + e.getMessage());
+        }
     }
 
     @PutMapping("/{id}")
-    public Propietari editarPropietari(@RequestBody Propietari p) {
-        return this.propietarisService.editarPropietari(p);
+    public PropietariDto editarPropietari(@PathVariable("id") Long id, @RequestBody Propietari p) {
+        return this.mapToPropietariDto(propietarisService.editarPropietari(id, p));
     }
 
     @DeleteMapping("/{id}")
-    public Propietari esborrarPropietari(@PathVariable("id") Long id) {
-        return this.propietarisService.esborrarPropietari(id);
+    public ResponseEntity<String> esborrarPropietari(@PathVariable Long id) {
+        try {
+            propietarisService.esborrarPropietari(id);
+            return ResponseEntity.ok("Propietari esborrat amb èxit");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    private List<PropietariDto> mapToPropietariDto(List<Propietari> propietaris) {
+        List<PropietariDto> propietarisDto = new ArrayList<>();
+        for (Propietari propietari : propietaris) {
+            PropietariDto propietariDto = new PropietariDto();
+            propietariDto.setId(propietari.getId());
+            propietariDto.setNom(propietari.getNom());
+            propietariDto.setEmail(propietari.getEmail());
+            propietariDto.setTelefon(propietari.getTelefon());
+            propietariDto.setAdreca(propietari.getAdreca());
+            propietariDto.setDataNaixement(propietari.getDataNaixement());
+            propietariDto.setGenere(propietari.getGenere());
+            propietariDto.setTipus(propietari.getTipus());
+            propietariDto.setCreador(propietari.getCreador());
+            propietariDto.setDataCreacio(propietari.getDataCreacio());
+            propietariDto.setDataModificacio(propietari.getDataModificacio());
+            propietarisDto.add(propietariDto);
+        }
+        return propietarisDto;
+    }
+
+    private PropietariDto mapToPropietariDto(Propietari propietari) {
+        PropietariDto propietariDto = new PropietariDto();
+        propietariDto.setId(propietari.getId());
+        propietariDto.setNom(propietari.getNom());
+        propietariDto.setEmail(propietari.getEmail());
+        propietariDto.setTelefon(propietari.getTelefon());
+        propietariDto.setAdreca(propietari.getAdreca());
+        propietariDto.setDataNaixement(propietari.getDataNaixement());
+        propietariDto.setGenere(propietari.getGenere());
+        propietariDto.setTipus(propietari.getTipus());
+        propietariDto.setCreador(propietari.getCreador());
+        propietariDto.setDataCreacio(propietari.getDataCreacio());
+        propietariDto.setDataModificacio(propietari.getDataModificacio());
+        return propietariDto;
     }
 }

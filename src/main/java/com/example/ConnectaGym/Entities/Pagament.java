@@ -1,6 +1,8 @@
 package com.example.ConnectaGym.Entities;
 
 import jakarta.persistence.*;
+
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -12,26 +14,26 @@ public class Pagament {
     @Column(name = "Id")
     private Long id;
 
-    @Column(name = "NomMembre")
-    private String nomMembre;
-
-    @Column(name = "Quota")
-    private double quota;
+    @ManyToOne
+    @JoinColumn(name = "IdMembre", referencedColumnName = "Id")
+    private MembreGimnas membre;
+    
+    @ManyToOne
+    @JoinColumn(name = "IdQuota", referencedColumnName = "Id")
+    private Quota quota;
 
     @Column(name = "Quantitat")
     private Long quantitat;
 
     @Column(name = "DataInici")
-    private Date dataInici;
+    private LocalDateTime dataInici;
 
     @Column(name = "DataFinal")
-    private Date dataFinal;
+    private LocalDateTime dataFinal;
 
-    @Column(name = "Gimnas")
-    private String gimnas;
-
-    @Column(name = "Actiu")
-    private boolean actiu;
+    @ManyToOne
+    @JoinColumn(name = "IdGimnas", referencedColumnName = "Id")
+    private Gimnas gimnas;
 
     // Getters y setters
 
@@ -43,22 +45,22 @@ public class Pagament {
         this.id = id;
     }
 
-    public String getNomMembre() {
-        return nomMembre;
+    public MembreGimnas getMembre() {
+        return membre;
     }
 
-    public void setNomMembre(String nomMembre) {
-        this.nomMembre = nomMembre;
+    public void setMembre(MembreGimnas membre) {
+        this.membre = membre;
     }
-
-    public double getQuota() {
+    
+    public Quota getQuota() {
         return quota;
     }
-
-    public void setQuota(double quota) {
+    
+    public void setQuota(Quota quota) {
         this.quota = quota;
     }
-
+    
     public Long getQuantitat() {
         return quantitat;
     }
@@ -67,35 +69,27 @@ public class Pagament {
         this.quantitat = quantitat;
     }
 
-    public Date getDataInici() {
+    public LocalDateTime getDataInici() {
         return dataInici;
     }
 
-    public void setDataInici(Date dataInici) {
+    public void setDataInici(LocalDateTime dataInici) {
         this.dataInici = dataInici;
     }
 
-    public Date getDataFinal() {
+    public LocalDateTime getDataFinal() {
         return dataFinal;
     }
 
-    public void setDataFinal(Date dataFinal) {
+    public void setDataFinal(LocalDateTime dataFinal) {
         this.dataFinal = dataFinal;
     }
 
-    public String getGimnas() {
+    public Gimnas getGimnas() {
         return gimnas;
     }
 
-    public void setGimnas(String gimnas) {
+    public void setGimnas(Gimnas gimnas) {
         this.gimnas = gimnas;
-    }
-
-    public boolean isActiu() {
-        return actiu;
-    }
-
-    public void setActiu(boolean actiu) {
-        this.actiu = actiu;
     }
 }

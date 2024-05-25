@@ -1,6 +1,9 @@
 package com.example.ConnectaGym.Entities;
 
+import com.example.ConnectaGym.Security.entity.Usuari;
 import jakarta.persistence.*;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "missatges")
@@ -11,14 +14,22 @@ public class Missatge {
     @Column(name = "Id")
     private Long id;
 
-    @Column(name = "NomMembre")
-    private String nomMembre;
+    @ManyToOne
+    @JoinColumn(name = "IdMembre", referencedColumnName = "Id")
+    private MembreGimnas membre;
+
+    @ManyToOne
+    @JoinColumn(name = "IdUsuari", referencedColumnName = "Id")
+    private Usuari remitent;
 
     @Column(name = "Titol")
     private String titol;
 
     @Column(name = "Missatge")
     private String missatge;
+
+    @Column(name = "dataEnviament")
+    private LocalDateTime dataEnviament;
 
     // Getters y setters
 
@@ -30,12 +41,20 @@ public class Missatge {
         this.id = id;
     }
 
-    public String getNomMembre() {
-        return nomMembre;
+    public MembreGimnas getMembre() {
+        return membre;
     }
 
-    public void setNomMembre(String nomMembre) {
-        this.nomMembre = nomMembre;
+    public void setMembre(MembreGimnas membre) {
+        this.membre = membre;
+    }
+
+    public Usuari getRemitent() {
+        return remitent;
+    }
+
+    public void setRemitent(Usuari remitent) {
+        this.remitent = remitent;
     }
 
     public String getTitol() {
@@ -52,5 +71,13 @@ public class Missatge {
 
     public void setMissatge(String missatge) {
         this.missatge = missatge;
+    }
+
+    public LocalDateTime getDataEnviament() {
+        return dataEnviament;
+    }
+
+    public void setDataEnviament(LocalDateTime dataEnviament) {
+        this.dataEnviament = dataEnviament;
     }
 }

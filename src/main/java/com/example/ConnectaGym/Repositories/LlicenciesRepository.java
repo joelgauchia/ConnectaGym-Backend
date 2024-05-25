@@ -9,6 +9,6 @@ import java.util.List;
 @Repository
 public interface LlicenciesRepository extends JpaRepository<Llicencia, Long> {
     List<Llicencia> findByActivaTrue();
-
     List<Llicencia> findByActivaFalse();
+    boolean existsByPropietariNom(String nomPropietari);
 }

@@ -1,7 +1,13 @@
 package com.example.ConnectaGym.Entities;
 
+import com.example.ConnectaGym.Security.entity.Usuari;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "gimnasos")
@@ -24,11 +30,13 @@ public class Gimnas {
     @Column(name = "Email")
     private String email;
 
-    @Column(name = "NomPropietari")
-    private String nomPropietari;
+    @ManyToOne
+    @JoinColumn(name = "IdPropietari", referencedColumnName = "Id")
+    private Propietari propietari;
 
-    @Column(name = "Admin")
-    private String admin;
+    @ManyToOne
+    @JoinColumn(name = "IdCreador", referencedColumnName = "Id")
+    private Usuari creador;
 
     @Column(name = "DataCreacio")
     private LocalDateTime dataCreacio;
@@ -82,20 +90,20 @@ public class Gimnas {
         this.email = email;
     }
 
-    public String getNomPropietari() {
-        return nomPropietari;
+    public Propietari getPropietari() {
+        return propietari;
     }
 
-    public void setNomPropietari(String nomPropietari) {
-        this.nomPropietari = nomPropietari;
+    public void setPropietari(Propietari propietari) {
+        this.propietari = propietari;
     }
 
-    public String getAdmin() {
-        return admin;
+    public Usuari getCreador() {
+        return creador;
     }
 
-    public void setAdmin(String admin) {
-        this.admin = admin;
+    public void setAdmin(Usuari creador) {
+        this.creador = creador;
     }
 
     public LocalDateTime getDataCreacio() {

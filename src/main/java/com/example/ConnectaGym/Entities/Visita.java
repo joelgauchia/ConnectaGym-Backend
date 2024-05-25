@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
 import jakarta.persistence.*;
+
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -15,14 +17,20 @@ public class Visita {
     @Column(name = "Id")
     private Long id;
 
-    @Column(name = "NomMembre")
-    private String nomMembre;
+    @ManyToOne
+    @JoinColumn(name = "idMembre", referencedColumnName = "Id")
+    private MembreGimnas membreGimnas;
 
     @Column(name = "DataVisita")
-    private Date dataVisita;
+    private LocalDateTime dataVisita;
 
-    @Column(name = "Gimnas")
-    private String gimnas;
+    @ManyToOne
+    @JoinColumn(name = "idGimnas", referencedColumnName = "Id")
+    private Gimnas gimnas;
+
+    private Long preu;
+
+    private boolean abonat;
 
     // Getters y setters
 
@@ -34,27 +42,43 @@ public class Visita {
         this.id = id;
     }
 
-    public String getNomMembre() {
-        return nomMembre;
+    public MembreGimnas getMembreGimnas() {
+        return membreGimnas;
+    }
+    
+    public void setMembreGimnas(MembreGimnas membreGimnas) {
+        this.membreGimnas = membreGimnas;
     }
 
-    public void setNomMembre(String nomMembre) {
-        this.nomMembre = nomMembre;
-    }
-
-    public Date getDataVisita() {
+    public LocalDateTime getDataVisita() {
         return dataVisita;
     }
 
-    public void setDataVisita(Date dataVisita) {
+    public void setDataVisita(LocalDateTime dataVisita) {
         this.dataVisita = dataVisita;
     }
 
-    public String getGimnas() {
+    public Gimnas getGimnas() {
         return gimnas;
     }
-
-    public void setGimnas(String gimnas) {
+    
+    public void setGimnas(Gimnas gimnas) {
         this.gimnas = gimnas;
+    }
+
+    public boolean isAbonat() {
+        return abonat;
+    }
+
+    public void setAbonat(boolean abonat) {
+        this.abonat = abonat;
+    }
+
+    public Long getPreu() {
+        return preu;
+    }
+
+    public void setPreu(Long preu) {
+        this.preu = preu;
     }
 }
